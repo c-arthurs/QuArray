@@ -46,7 +46,7 @@ class DabAnalysis(QThread):
                 info.append(self.QuantCore(image, filename=file, save=self.save))
                 analysis.append(info)
                 print(info)
-                self.countChanged.emit(int(i))  # EMIT the loading bar
+                self.countChanged.emit(int(i)+1)  # EMIT the loading bar
             self.info.emit(file + " analysed")
             i += 1
         df = pd.DataFrame(analysis, columns=('CoreName', 'AMTsignal', 'Mean_intensity', 'Standard_Dev_intensity',
