@@ -51,13 +51,17 @@ class GraphicsScene(QGraphicsScene):
         diameter = core_diameter / scale_index
         a = 0
         for y, x in self.centroid:
-            self.addRect((x - (diameter / 2)), (y - (diameter / 2)), diameter, diameter, pen, brush)
-            text = self.addText(cores[a])  # label
-            text.setPos(x, y)
-            font = QtGui.QFont()
-            font.setPointSize(80)
-            text.setFont(font)
-            a = a + 1
+            try:
+                self.addRect((x - (diameter / 2)), (y - (diameter / 2)), diameter, diameter, pen, brush)
+                text = self.addText(cores[a])  # label
+                text.setPos(x, y)
+                font = QtGui.QFont()
+                font.setPointSize(80)
+                text.setFont(font)
+                a = a + 1
+            except IndexError as e:
+                self.centroid.pop(a)
+                continue
 
     def save(self, output, name):
         # Get region of scene to capture from somewhere.
