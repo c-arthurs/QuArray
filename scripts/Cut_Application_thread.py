@@ -92,11 +92,17 @@ class MyWindow(QtWidgets.QWidget):
         self.export_2.clicked.connect(lambda: self.export_images())
 
         # threshold buttons
+        self.gausianval = 0
+        self.thresholdval = None
+
         self.otsu.clicked.connect(lambda: self.threshold("otsu"))
         self.threshmean.clicked.connect(lambda: self.threshold("mean"))
         self.threshtriangle.clicked.connect(lambda: self.threshold("triangle"))
         self.threshli.clicked.connect(lambda: self.threshold("li"))
-        self.toggleorigional.clicked.connect(lambda: self.showimage(self.overview))
+        self.toggleorigional.clicked.connect(lambda: self.threshold("origional"))
+        self.gausslider.setMaximum(5)
+        self.gausslider.setValue(0)
+        self.gausslider.valueChanged.connect(self.gaus)
 
         self.init_scene()
         self.show()
@@ -202,12 +208,18 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         return array[idx]
 
     def showimage(self, image):
+        self.current_image = image
         img = qimage2ndarray.array2qimage(image, normalize=True)
         img = QtGui.QPixmap(img)
         self.pixmap.setPixmap(img)
         self.graphicsView.fitInView(self.graphicsView.sceneRect(), QtCore.Qt.KeepAspectRatio)
 
     def threshold(self, threshold_name):
+        if threshold_name == "origional":
+            self.showimage(self.overview)
+            self.thresholdval = None
+            return
+        self.thresholdval = threshold_name
         im = rgb2gray(self.overview)
         if threshold_name == "otsu":
             threshold = threshold_otsu(im)
@@ -220,8 +232,13 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         self.current_image = im > threshold
         self.showimage(self.current_image)
 
-    def gaus(self, x):
-        filtered = gaussian(self.current_image, sigma=x)
+    def gaus(self):
+        if self.current_image.ndim > 2:
+            filtered = gaussian(self.overview, sigma=self.gausslider.value())
+        else:
+            self.threshold(self.thresholdval)
+            filtered = gaussian(self.current_image, sigma=self.gausslider.value())
+        self.showimage(filtered)
 
 
     def read_excel(self):
