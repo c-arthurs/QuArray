@@ -14,6 +14,8 @@ import sys
 from PyQt5.QtWidgets import QFileDialog, QGraphicsItem, QTabWidget
 from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot
 
+from skimage.filters import threshold_otsu
+
 
 sys._MEIPASS = '.'  # for running locally
 
@@ -182,7 +184,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
               f" corresponding to level {self.lvl}")
         self.overview = np.array(self.image.read_region(location=(0, 0), level=self.lvl,
                                                         size=self.width_height[self.lvl]))
-        self.showimage()
+        self.showimage(image=self.overview)
 
     def find_nearest(self, array, value):
         # https://stackoverflow.com/questions/2566412/find-nearest-value-in-numpy-array
@@ -190,11 +192,14 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         idx = (np.abs(array - value)).argmin()
         return array[idx]
 
-    def showimage(self):
-        img = qimage2ndarray.array2qimage(self.overview, normalize=True)
+    def showimage(self, image):
+        img = qimage2ndarray.array2qimage(image, normalize=True)
         img = QtGui.QPixmap(img)
         self.pixmap.setPixmap(img)
         self.graphicsView.fitInView(self.graphicsView.sceneRect(), QtCore.Qt.KeepAspectRatio)
+
+    def threshold(self):
+
 
     def read_excel(self):
         self.activate([self.numberOfCoresLabel, self.numberOfCoresLineEdit, self.diameterLabel, self.diamiterLineEdit,
