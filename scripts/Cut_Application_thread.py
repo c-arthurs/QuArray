@@ -14,7 +14,8 @@ import sys
 from PyQt5.QtWidgets import QFileDialog, QGraphicsItem, QTabWidget
 from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot
 
-from skimage.filters import threshold_otsu
+from skimage.filters import threshold_otsu, threshold_li, threshold_mean, threshold_triangle, gaussian
+from skimage.color import rgb2gray
 
 
 sys._MEIPASS = '.'  # for running locally
@@ -89,6 +90,14 @@ class MyWindow(QtWidgets.QWidget):
         self.load_excel.clicked.connect(lambda: self.read_excel())
         self.overlay.clicked.connect(lambda: self.overlaystart())
         self.export_2.clicked.connect(lambda: self.export_images())
+
+        # threshold buttons
+        self.otsu.clicked.connect(lambda: self.threshold("otsu"))
+        self.threshmean.clicked.connect(lambda: self.threshold("mean"))
+        self.threshtriangle.clicked.connect(lambda: self.threshold("triangle"))
+        self.threshli.clicked.connect(lambda: self.threshold("li"))
+        self.toggleorigional.clicked.connect(lambda: self.showimage(self.overview))
+
         self.init_scene()
         self.show()
 
@@ -198,7 +207,21 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         self.pixmap.setPixmap(img)
         self.graphicsView.fitInView(self.graphicsView.sceneRect(), QtCore.Qt.KeepAspectRatio)
 
-    def threshold(self):
+    def threshold(self, threshold_name):
+        im = rgb2gray(self.overview)
+        if threshold_name == "otsu":
+            threshold = threshold_otsu(im)
+        if threshold_name == "li":
+            threshold = threshold_li(im)
+        if threshold_name == "mean":
+            threshold = threshold_mean(im)
+        if threshold_name == "triangle":
+            threshold = threshold_triangle(im)
+        self.current_image = im > threshold
+        self.showimage(self.current_image)
+
+    def gaus(self, x):
+        filtered = gaussian(self.current_image, sigma=x)
 
 
     def read_excel(self):
