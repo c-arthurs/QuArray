@@ -16,6 +16,7 @@ from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot
 
 from skimage.filters import threshold_otsu, threshold_li, threshold_mean, threshold_triangle, gaussian
 from skimage.color import rgb2gray
+from skimage.morphology import closing, square
 
 
 sys._MEIPASS = '.'  # for running locally
@@ -103,7 +104,9 @@ class MyWindow(QtWidgets.QWidget):
         self.gausslider.setMaximum(5)
         self.gausslider.setValue(0)
         self.gausslider.valueChanged.connect(self.gaus)
-
+        self.closingslider.setMaximum(50)
+        self.closingslider.setValue(0)
+        self.closingslider.valueChanged.connect(self.closing)
         self.init_scene()
         self.show()
 
@@ -214,12 +217,17 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         self.pixmap.setPixmap(img)
         self.graphicsView.fitInView(self.graphicsView.sceneRect(), QtCore.Qt.KeepAspectRatio)
 
+    def reset_sliders(self):
+        self.gausslider.setValue(0)
+        self.closingslider.setValue(0)
+
     def threshold(self, threshold_name):
         if threshold_name == "origional":
             self.showimage(self.overview)
             self.thresholdval = None
             return
         self.thresholdval = threshold_name
+        self.reset_sliders()
         im = rgb2gray(self.overview)
         if threshold_name == "otsu":
             threshold = threshold_otsu(im)
@@ -239,6 +247,17 @@ level_downsamples = {str(self.image.level_downsamples)}""")
             self.threshold(self.thresholdval)
             filtered = gaussian(self.current_image, sigma=self.gausslider.value())
         self.showimage(filtered)
+
+    def closing(self):
+        if self.current_image.ndim == 2:
+            if self.closingslider.value() > 0:
+                if self.gausslider.value() > 0:
+                    closed = gaussian(self.current_image, sigma=self.gausslider.value())
+                    closed = closing(closed, square(self.closingslider.value()))
+                else:
+                    self.threshold(self.thresholdval)
+                    closed = closing(self.current_image, square(self.closingslider.value()))
+                self.showimage(closed)
 
 
     def read_excel(self):

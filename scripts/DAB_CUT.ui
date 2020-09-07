@@ -597,12 +597,12 @@
                    </font>
                   </property>
                   <property name="text">
-                   <string>Fill</string>
+                   <string>Closing</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSlider" name="fillslider">
+                 <widget class="QSlider" name="closingslider">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
                     <horstretch>0</horstretch>
