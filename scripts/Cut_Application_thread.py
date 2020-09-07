@@ -16,8 +16,13 @@ from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot
 
 from skimage.filters import threshold_otsu, threshold_li, threshold_mean, threshold_triangle, gaussian
 from skimage.color import rgb2gray
-from skimage.morphology import closing, square
+from skimage.morphology import closing, square, remove_small_objects, label
 
+from PIL import Image
+"""
+TODO - the current image method is currently not working well - the better way is to just save the methods that 
+have been applied and then reapply them when the image is needed - for the remove small objects phase
+"""
 
 sys._MEIPASS = '.'  # for running locally
 
@@ -92,6 +97,8 @@ class MyWindow(QtWidgets.QWidget):
         self.overlay.clicked.connect(lambda: self.overlaystart())
         self.export_2.clicked.connect(lambda: self.export_images())
 
+        self.current_image = None
+
         # threshold buttons
         self.gausianval = 0
         self.thresholdval = None
@@ -107,6 +114,8 @@ class MyWindow(QtWidgets.QWidget):
         self.closingslider.setMaximum(50)
         self.closingslider.setValue(0)
         self.closingslider.valueChanged.connect(self.closing)
+        self.removesmallobjects.clicked.connect(self.removesmall)
+
         self.init_scene()
         self.show()
 
@@ -227,7 +236,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
             self.thresholdval = None
             return
         self.thresholdval = threshold_name
-        self.reset_sliders()
+        # self.reset_sliders()
         im = rgb2gray(self.overview)
         if threshold_name == "otsu":
             threshold = threshold_otsu(im)
@@ -258,6 +267,16 @@ level_downsamples = {str(self.image.level_downsamples)}""")
                     self.threshold(self.thresholdval)
                     closed = closing(self.current_image, square(self.closingslider.value()))
                 self.showimage(closed)
+
+    def removesmall(self): # TODO this is currently not giving the expected result - array max should be in the hundreds
+        if self.current_image.ndim == 2:
+            labeled_image = label(self.current_image)
+            print(labeled_image.shape, labeled_image.max(), labeled_image.min())
+            labeled_image = remove_small_objects(labeled_image, min_size=int(self.smallobs_text.toPlainText()))
+            print(self.smallobs_text.toPlainText())
+            print(labeled_image.shape, labeled_image.max(), labeled_image.min())
+            self.showimage(labeled_image)
+
 
 
     def read_excel(self):
