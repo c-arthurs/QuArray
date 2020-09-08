@@ -231,6 +231,8 @@ level_downsamples = {str(self.image.level_downsamples)}""")
                            self.scanDateLineEdit, self.dimensionsLabel, self.dimensionsLineEdit, self.overlayLevelLabel,
                            self.overlayLevelLineEdit, self.graphicsView, self.overlaySave])
             self.get_overview()
+            if os.path.exists(os.path.splitext(self.path)[0] + '.xlsx'):
+                self.read_excel()
 
     def get_overview(self):
         self.width_height = [
@@ -304,6 +306,10 @@ level_downsamples = {str(self.image.level_downsamples)}""")
                 self.showimage(closed)
 
     def removesmall(self):
+        """
+        the function name is misleading as this function now applies remove small objects - then
+        overlays the cores and saves the image
+        """
         if not self.current_augments['threshold']:
             return
         if self.current_augments['overlay_applied']:
