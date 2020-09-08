@@ -20,6 +20,7 @@ from skimage.morphology import closing, square, remove_small_objects, label
 from skimage.measure import regionprops
 
 from PIL import Image
+
 """
 TODO - the current image method is currently not working well - the better way is to just save the methods that 
 have been applied and then reapply them when the image is needed - for the remove small objects phase
@@ -53,11 +54,30 @@ class GraphicsScene(QGraphicsScene):
         print(btn)
         print(self.coords)
 
-    def overlay_cores(self, core_diameter, scale_index, cores):  # removed - centroid, image, cores
-        pen = QPen(QtCore.Qt.black)
+    def sortCentroid(self, centroid):
+        sortList = []
+        a = 0
+        comLength = 0
+        for length in self.rowcount:
+            comLength = comLength + length
+            sortList.append((sorted(centroid[a:comLength], key=lambda k: [k[1]])))
+            a = a + length
+        sortedCentroid = []
+        for x in sortList:
+            for y in x:
+                sortedCentroid.append(y)
+        return sortedCentroid
+
+    def overlay_cores(self, core_diameter, scale_index, cores, autopilot=False):  # removed - centroid, image, cores
+        pen = QPen(QtCore.Qt.green)
         pen.setWidthF(6)  # border width
         brush = QBrush(QtCore.Qt.transparent)
-        self.centroid = [(y, x) for (x, y) in self.coords]
+        if autopilot:
+            self.centroid = self.coords
+            self.centroid = self.sortCentroid(self.centroid)
+        else:
+            self.centroid = [(y, x) for (x, y) in self.coords]
+        print("len - ", len(self.coords))
         diameter = core_diameter / scale_index
         a = 0
         for y, x in self.centroid:
@@ -65,12 +85,14 @@ class GraphicsScene(QGraphicsScene):
                 self.addRect((x - (diameter / 2)), (y - (diameter / 2)), diameter, diameter, pen, brush)
                 text = self.addText(cores[a])  # label
                 text.setPos(x, y)
+                text.setDefaultTextColor(QtCore.Qt.green)
                 font = QtGui.QFont()
                 font.setPointSize(80)
                 text.setFont(font)
                 a = a + 1
             except IndexError as e:
                 self.centroid.pop(a)
+                print("index error", self.centroid[a])
                 continue
 
     def save(self, output, name):
@@ -81,6 +103,7 @@ class GraphicsScene(QGraphicsScene):
         self.render(painter, target=QRectF(image.rect()), source=self.sceneRect())
         painter.end()
         image.save(output + os.sep + name + "_overlay" + ".tiff")
+
 
 class MyWindow(QtWidgets.QWidget):
     def __init__(self):
@@ -116,6 +139,7 @@ class MyWindow(QtWidgets.QWidget):
         self.closingslider.setValue(0)
         self.closingslider.valueChanged.connect(self.closing)
         self.removesmallobjects.clicked.connect(self.removesmall)
+        self.current_augments = {"filter": False, "gausian": False, "closing": False}
 
         self.init_scene()
         self.show()
@@ -134,7 +158,9 @@ class MyWindow(QtWidgets.QWidget):
             pass
         if autopilot:
             self.scene.coords = coords
-        self.scene.overlay_cores(self.core_diameter, self.scale_index, self.cores)
+            self.scene.overlay_cores(self.core_diameter, self.scale_index, self.cores, autopilot=True)
+        else:
+            self.scene.overlay_cores(self.core_diameter, self.scale_index, self.cores)
         if self.overlaySave.isChecked():
             self.info(f"Overlay saved to - {self.output}")
             self.scene.save(self.output, self.name)
@@ -159,9 +185,9 @@ class MyWindow(QtWidgets.QWidget):
 
     def loadndpi(self):
         self.init_scene()
-        self.path, _ = QFileDialog.getOpenFileName(parent=self, caption='Open file',
-                                                directory="/Users/callum/OneDrive - King's College London/PAPERS/JLTA_paper/DAB_analysis/", filter='*.ndpi;;*.svs', )
-        #self.path = "/Users/callum/Desktop/ndpitest/MS2_AA37.ndpi"
+        # self.path, _ = QFileDialog.getOpenFileName(parent=self, caption='Open file',
+        #                                         directory="/Users/callum/OneDrive - King's College London/PAPERS/JLTA_paper/DAB_analysis/", filter='*.ndpi;;*.svs', )
+        self.path = "/Users/callum/Desktop/sample images/JLTA2_AA51.ndpi"
         if self.path:
             self.output = os.path.splitext(self.path)[0] + '_split'
             if not os.path.exists(self.output):  # make output directory
@@ -254,7 +280,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
             threshold = threshold_mean(im)
         if threshold_name == "triangle":
             threshold = threshold_triangle(im)
-        self.current_image = im > threshold
+        self.current_image = im < threshold
         self.showimage(self.current_image)
 
     def gaus(self):
@@ -274,9 +300,11 @@ level_downsamples = {str(self.image.level_downsamples)}""")
                 else:
                     self.threshold(self.thresholdval)
                     closed = closing(self.current_image, square(self.closingslider.value()))
+                closed = closed > 0
                 self.showimage(closed)
 
-    def removesmall(self): # TODO this is currently not giving the expected result - array max should be in the hundreds
+    def removesmall(
+            self):  # TODO this is currently not giving the expected result - array max should be in the hundreds
         if not self.current_image.ndim == 2:
             return
         labeled_image = label(self.current_image)
@@ -284,13 +312,14 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         labeled_image = remove_small_objects(labeled_image, min_size=int(self.smallobs_text.toPlainText()))
         print(self.smallobs_text.toPlainText())
         print(labeled_image.shape, labeled_image.max(), labeled_image.min())
+        np.save("/Users/callum/Desktop/sample images/JLTA2_AA51_split/JLTA2_AA51_split_overlay.np", self.current_image)
         self.showimage(labeled_image)
         labels = regionprops(labeled_image)
         centroid = [r.centroid for r in labels]
+        print("centroid length - ", len(centroid))
         area = [r.area for r in labels]
         bbox = [r.bbox for r in labels]
-
-
+        self.overlaystart(autopilot=True, coords=centroid)
 
     def read_excel(self):
         self.activate([self.numberOfCoresLabel, self.numberOfCoresLineEdit, self.diameterLabel, self.diamiterLineEdit,
@@ -329,6 +358,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
             self.cores = cores
             self.values = values
             self.rowcount = rowcount
+            self.scene.rowcount = rowcount
 
     def info(self, text):
         self.label.setText(text)
@@ -342,8 +372,6 @@ level_downsamples = {str(self.image.level_downsamples)}""")
                        self.numberOfCoresLineEdit, self.diameterLabel, self.diamiterLineEdit,
                        self.export_2, self.overlay, self.excel_btn, self.load_ndpi, self.load_excel, self.overlaySave],
                       action=False)
-
-
 
         self.export = Export(image=self.image, centroid=self.scene.centroid, cores=self.cores,
                              scale_index=self.scale_index,
@@ -394,7 +422,6 @@ class Export(QObject):
         self.export_images(self.centroid, self.cores)
         print('exporting')
 
-
     def export_images(self, centroid, cores):
         infostr = []
         self.json_write()
@@ -418,12 +445,9 @@ class Export(QObject):
         print('\n'.join(infostr))
         self.done.emit(True)
 
-
     def json_write(self):
         jsondata = {"path": self.path, "centroid": self.centroid, "cores": self.cores, "diameter": self.core_diameter,
                     "scale_index": self.scale_index}
         self.info.emit('Saving ' + self.output + os.sep + self.name + '_metadata.json')
         with open(self.output + os.sep + self.name + '_metadata.json', "w") as write_file:
             json.dump(jsondata, write_file)
-
-
