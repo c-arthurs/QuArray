@@ -17,6 +17,7 @@ from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot
 from skimage.filters import threshold_otsu, threshold_li, threshold_mean, threshold_triangle, gaussian
 from skimage.color import rgb2gray
 from skimage.morphology import closing, square, remove_small_objects, label
+from skimage.measure import regionprops
 
 from PIL import Image
 """
@@ -119,13 +120,20 @@ class MyWindow(QtWidgets.QWidget):
         self.init_scene()
         self.show()
 
-    def overlaystart(self):
+    def overlaystart(self, autopilot=False, coords=None):
+        """
+        starts overlay
+        :param autopilot: if the coords need to be asigned outside of the click function
+        :param coords: the external coords to be applied in autopilot
+        """
         try:
             self.core_diameter = int(self.diamiterLineEdit.text().strip())
         except:
             self.core_diameter = 6000
             self.diamiterLineEdit.setText('6000')
             pass
+        if autopilot:
+            self.scene.coords = coords
         self.scene.overlay_cores(self.core_diameter, self.scale_index, self.cores)
         if self.overlaySave.isChecked():
             self.info(f"Overlay saved to - {self.output}")
@@ -269,13 +277,18 @@ level_downsamples = {str(self.image.level_downsamples)}""")
                 self.showimage(closed)
 
     def removesmall(self): # TODO this is currently not giving the expected result - array max should be in the hundreds
-        if self.current_image.ndim == 2:
-            labeled_image = label(self.current_image)
-            print(labeled_image.shape, labeled_image.max(), labeled_image.min())
-            labeled_image = remove_small_objects(labeled_image, min_size=int(self.smallobs_text.toPlainText()))
-            print(self.smallobs_text.toPlainText())
-            print(labeled_image.shape, labeled_image.max(), labeled_image.min())
-            self.showimage(labeled_image)
+        if not self.current_image.ndim == 2:
+            return
+        labeled_image = label(self.current_image)
+        print(labeled_image.shape, labeled_image.max(), labeled_image.min())
+        labeled_image = remove_small_objects(labeled_image, min_size=int(self.smallobs_text.toPlainText()))
+        print(self.smallobs_text.toPlainText())
+        print(labeled_image.shape, labeled_image.max(), labeled_image.min())
+        self.showimage(labeled_image)
+        labels = regionprops(labeled_image)
+        centroid = [r.centroid for r in labels]
+        area = [r.area for r in labels]
+        bbox = [r.bbox for r in labels]
 
 
 
