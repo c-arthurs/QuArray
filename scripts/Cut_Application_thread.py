@@ -139,7 +139,7 @@ class MyWindow(QtWidgets.QWidget):
         self.closingslider.setValue(0)
         self.closingslider.valueChanged.connect(self.closing)
         self.removesmallobjects.clicked.connect(self.removesmall)
-        self.current_augments = {"filter": False, "gausian": False, "closing": False}
+        self.current_augments = {"threshold": False, "gausian": False, "closing": False}
 
         self.init_scene()
         self.show()
@@ -268,6 +268,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         if threshold_name == "origional":
             self.showimage(self.overview)
             self.thresholdval = None
+            self.current_augments["threshold"] = False
             return
         self.thresholdval = threshold_name
         # self.reset_sliders()
@@ -280,6 +281,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
             threshold = threshold_mean(im)
         if threshold_name == "triangle":
             threshold = threshold_triangle(im)
+        self.current_augments["threshold"] = threshold_name
         self.current_image = im < threshold
         self.showimage(self.current_image)
 
@@ -287,19 +289,17 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         if self.current_image.ndim > 2:
             filtered = gaussian(self.overview, sigma=self.gausslider.value())
         else:
-            self.threshold(self.thresholdval)
+            self.threshold(self.current_augments["threshold"])
             filtered = gaussian(self.current_image, sigma=self.gausslider.value())
         self.showimage(filtered)
 
     def closing(self):
-        if self.current_image.ndim == 2:
+        if self.current_augments["threshold"]:
+            self.threshold(self.current_augments["threshold"])
             if self.closingslider.value() > 0:
-                if self.gausslider.value() > 0:
-                    closed = gaussian(self.current_image, sigma=self.gausslider.value())
-                    closed = closing(closed, square(self.closingslider.value()))
-                else:
-                    self.threshold(self.thresholdval)
-                    closed = closing(self.current_image, square(self.closingslider.value()))
+                if self.current_augments["gausian"]:
+                    self.current_image = gaussian(self.current_image, sigma=self.gausslider.value())
+                closed = closing(self.current_image, square(self.closingslider.value()))
                 closed = closed > 0
                 self.showimage(closed)
 
