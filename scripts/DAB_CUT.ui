@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1191</width>
+    <width>1236</width>
     <height>708</height>
    </rect>
   </property>
@@ -66,14 +66,14 @@
        <item>
         <widget class="QPushButton" name="load_ndpi">
          <property name="text">
-          <string>Load NDPI</string>
+          <string>Load Whole Slide Image</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="load_excel">
          <property name="text">
-          <string>Load Excel</string>
+          <string>Load Excel Layout</string>
          </property>
         </widget>
        </item>
@@ -131,6 +131,9 @@
        </item>
        <item>
         <widget class="QTabWidget" name="tabWidget">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
            <horstretch>0</horstretch>
@@ -158,7 +161,7 @@
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <property name="iconSize">
           <size>
@@ -432,7 +435,7 @@
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>134</height>
+               <height>146</height>
               </size>
              </property>
              <property name="font">
@@ -445,19 +448,19 @@
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_8">
               <property name="spacing">
-               <number>0</number>
+               <number>1</number>
               </property>
               <property name="leftMargin">
-               <number>4</number>
+               <number>2</number>
               </property>
               <property name="topMargin">
-               <number>6</number>
+               <number>4</number>
               </property>
               <property name="rightMargin">
-               <number>4</number>
+               <number>2</number>
               </property>
               <property name="bottomMargin">
-               <number>4</number>
+               <number>2</number>
               </property>
               <item>
                <widget class="QPushButton" name="otsu">
@@ -509,13 +512,19 @@
               </item>
               <item>
                <widget class="QPushButton" name="toggleorigional">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
                  </font>
                 </property>
                 <property name="text">
-                 <string>Toggle origional image</string>
+                 <string>Show WSI</string>
                 </property>
                </widget>
               </item>
@@ -632,12 +641,12 @@
                   <property name="maximumSize">
                    <size>
                     <width>30</width>
-                    <height>20</height>
+                    <height>23</height>
                    </size>
                   </property>
                   <property name="font">
                    <font>
-                    <pointsize>11</pointsize>
+                    <pointsize>10</pointsize>
                    </font>
                   </property>
                   <property name="text">
@@ -716,12 +725,12 @@
                   <property name="maximumSize">
                    <size>
                     <width>30</width>
-                    <height>20</height>
+                    <height>23</height>
                    </size>
                   </property>
                   <property name="font">
                    <font>
-                    <pointsize>11</pointsize>
+                    <pointsize>10</pointsize>
                    </font>
                   </property>
                   <property name="text">
@@ -752,36 +761,20 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextEdit" name="smallobs_text">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                    <horstretch>10</horstretch>
-                    <verstretch>10</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>10</width>
-                    <height>10</height>
-                   </size>
-                  </property>
+                 <widget class="QLineEdit" name="smallobs_text">
                   <property name="maximumSize">
                    <size>
-                    <width>50</width>
-                    <height>20</height>
+                    <width>40</width>
+                    <height>16777215</height>
                    </size>
                   </property>
                   <property name="font">
                    <font>
-                    <pointsize>11</pointsize>
+                    <pointsize>10</pointsize>
                    </font>
                   </property>
-                  <property name="html">
-                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;6000&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  <property name="text">
+                   <string>6000</string>
                   </property>
                  </widget>
                 </item>
@@ -921,7 +914,7 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>1075</width>
+          <width>1120</width>
           <height>77</height>
          </rect>
         </property>

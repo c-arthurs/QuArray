@@ -19,8 +19,6 @@ from skimage.color import rgb2gray
 from skimage.morphology import closing, square, remove_small_objects, label
 from skimage.measure import regionprops
 
-from PIL import Image
-
 """
 TODO - the current image method is currently not working well - the better way is to just save the methods that 
 have been applied and then reapply them when the image is needed - for the remove small objects phase
@@ -125,17 +123,19 @@ class MyWindow(QtWidgets.QWidget):
         self.gausianval = 0
         self.thresholdval = None
 
-        self.otsu.clicked.connect(lambda: self.threshold("otsu"))
-        self.threshmean.clicked.connect(lambda: self.threshold("mean"))
-        self.threshtriangle.clicked.connect(lambda: self.threshold("triangle"))
-        self.threshli.clicked.connect(lambda: self.threshold("li"))
-        self.toggleorigional.clicked.connect(lambda: self.threshold("origional"))
+        self.otsu.clicked.connect(lambda: [self.threshold("otsu"), self.reset_sliders()])
+        self.threshmean.clicked.connect(lambda: [self.threshold("mean"), self.reset_sliders()])
+        self.threshtriangle.clicked.connect(lambda: [self.threshold("triangle"), self.reset_sliders()])
+        self.threshli.clicked.connect(lambda: [self.threshold("li"), self.reset_sliders()])
+        self.toggleorigional.clicked.connect(lambda: [self.threshold("origional"), self.reset_sliders()])
         self.gausslider.setMaximum(5)
         self.gausslider.setValue(0)
-        self.gausslider.valueChanged.connect(self.gaus)
+        self.gausslider.valueChanged.connect(lambda: self.gauslineEdit.setText(str(self.gausslider.value()))) # change
+        self.gausslider.sliderReleased.connect(self.gaus)
         self.closingslider.setMaximum(50)
         self.closingslider.setValue(0)
-        self.closingslider.valueChanged.connect(self.closing)
+        self.closingslider.valueChanged.connect(lambda: self.closelineEdit.setText(str(self.closingslider.value())))
+        self.closingslider.sliderReleased.connect(self.closing)
         self.removesmallobjects.clicked.connect(self.removesmall)
         self.current_augments = {"threshold": False, "gausian": False, "closing": False, "overlay_applied" : False}
 
@@ -184,9 +184,9 @@ class MyWindow(QtWidgets.QWidget):
 
     def loadndpi(self):
         self.init_scene()
-        # self.path, _ = QFileDialog.getOpenFileName(parent=self, caption='Open file',
-        #                                         directory="/Users/callum/OneDrive - King's College London/PAPERS/JLTA_paper/DAB_analysis/", filter='*.ndpi;;*.svs', )
-        self.path = "/Users/callum/Desktop/sample images/JLTA2_AA51.ndpi"
+        self.path, _ = QFileDialog.getOpenFileName(parent=self, caption='Open file',
+                                                directory="/Users/callum/Desktop/", filter='*.ndpi;;*.svs', )
+        # self.path = "/Users/callum/Desktop/sample images/JLTA2_AA51.ndpi"
         if self.path:
             self.output = os.path.splitext(self.path)[0] + '_split'
             if not os.path.exists(self.output):  # make output directory
@@ -272,7 +272,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
             self.current_augments["threshold"] = False
             return
         self.thresholdval = threshold_name
-        # self.reset_sliders()
+
         im = rgb2gray(self.overview)
         if threshold_name == "otsu":
             threshold = threshold_otsu(im)
@@ -318,9 +318,9 @@ level_downsamples = {str(self.image.level_downsamples)}""")
             self.read_excel()
         labeled_image = label(self.current_image)
         try:
-            min = int(self.smallobs_text.toPlainText())
+            min = int(self.smallobs_text.text())
         except ValueError as e:
-            self.smallobs_text.setPlainText("6000")
+            self.smallobs_text.setText("6000")
             min = 6000
             self.info("remove small value must be an integer - reset to 6000")
         labeled_image = remove_small_objects(labeled_image, min_size=min)
@@ -337,7 +337,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
 
     def read_excel(self):
         self.activate([self.numberOfCoresLabel, self.numberOfCoresLineEdit, self.diameterLabel, self.diamiterLineEdit,
-                       self.export_2, self.overlay, self.progressBar, self.excel_btn, self.overlaySave])
+                       self.export_2, self.overlay, self.progressBar, self.excel_btn, self.overlaySave, self.tabWidget])
         if not hasattr(self, 'path'):
             self.excelpath, _ = QFileDialog.getOpenFileName(parent=self, caption='Open file',
                                                             directory="/Users/callum/Desktop", filter='*.xlsx')
@@ -384,8 +384,8 @@ level_downsamples = {str(self.image.level_downsamples)}""")
                        self.scanDateLineEdit, self.dimensionsLabel, self.dimensionsLineEdit, self.overlayLevelLabel,
                        self.overlayLevelLineEdit, self.graphicsView, self.numberOfCoresLabel,
                        self.numberOfCoresLineEdit, self.diameterLabel, self.diamiterLineEdit,
-                       self.export_2, self.overlay, self.excel_btn, self.load_ndpi, self.load_excel, self.overlaySave],
-                      action=False)
+                       self.export_2, self.overlay, self.excel_btn, self.load_ndpi, self.load_excel, self.overlaySave,
+                       self.tabWidget], action=False)
 
         self.export = Export(image=self.image, centroid=self.scene.centroid, cores=self.cores,
                              scale_index=self.scale_index,
