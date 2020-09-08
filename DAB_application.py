@@ -1,5 +1,5 @@
 # DEPLOY MAC
-# sudo pyinstaller -F --windowed -p /Users/callum/callum/dab/analysis_application/scripts --add-data "/Users/callum/callum/dab/analysis_application/scripts:scripts" --icon=scripts/docs/he.icns DAB_application.py
+# sudo pyinstaller -F --windowed -p /Users/callum/callum/TMAPP/scripts --add-data "/Users/callum/callum/TMAPP/scripts:scripts" --icon=scripts/docs/he.icns DAB_application.py
 # Windows
 # pyinstaller -F --windowed -p C:/Users/Admin/callum/analysis_application/scripts --add-data "C:/Users/Admin/callum/analysis_application/scripts;scripts" --icon=scripts/docs/he.ico DAB_application.py
 
