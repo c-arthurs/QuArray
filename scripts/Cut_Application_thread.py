@@ -139,7 +139,7 @@ class MyWindow(QtWidgets.QWidget):
         self.closingslider.setValue(0)
         self.closingslider.valueChanged.connect(self.closing)
         self.removesmallobjects.clicked.connect(self.removesmall)
-        self.current_augments = {"threshold": False, "gausian": False, "closing": False}
+        self.current_augments = {"threshold": False, "gausian": False, "closing": False, "overlay_applied" : False}
 
         self.init_scene()
         self.show()
@@ -303,10 +303,12 @@ level_downsamples = {str(self.image.level_downsamples)}""")
                 closed = closed > 0
                 self.showimage(closed)
 
-    def removesmall(
-            self):  # TODO this is currently not giving the expected result - array max should be in the hundreds
-        if not self.current_image.ndim == 2:
+    def removesmall(self):
+        if not self.current_augments['threshold']:
             return
+        if self.current_augments['overlay_applied']:
+            self.init_scene()
+            self.read_excel()
         labeled_image = label(self.current_image)
         print(labeled_image.shape, labeled_image.max(), labeled_image.min())
         labeled_image = remove_small_objects(labeled_image, min_size=int(self.smallobs_text.toPlainText()))
@@ -320,6 +322,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         area = [r.area for r in labels]
         bbox = [r.bbox for r in labels]
         self.overlaystart(autopilot=True, coords=centroid)
+        self.current_augments['overlay_applied'] = True
 
     def read_excel(self):
         self.activate([self.numberOfCoresLabel, self.numberOfCoresLineEdit, self.diameterLabel, self.diamiterLineEdit,
