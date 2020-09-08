@@ -108,8 +108,6 @@ class GraphicsScene(QGraphicsScene):
 class MyWindow(QtWidgets.QWidget):
     def __init__(self):
         super(MyWindow, self).__init__()
-        print(os.getcwd())
-        # uic.loadUi('./scripts/DAB_CUT.ui',
         uic.loadUi(sys._MEIPASS + os.sep + "scripts" + os.sep + "DAB_CUT.ui", self)  # for deployment
 
         self.tabWidget.setStyleSheet("QTabWidget::pane {margin: 0px,0px,0px,0px; padding: 0px}")
@@ -155,6 +153,7 @@ class MyWindow(QtWidgets.QWidget):
         except:
             self.core_diameter = 6000
             self.diamiterLineEdit.setText('6000')
+            self.info("core diamiter must be an integer - reset to 6000")
             pass
         if autopilot:
             self.scene.coords = coords
@@ -288,6 +287,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         self.showimage(self.current_image)
 
     def gaus(self):
+        self.gauslineEdit.setText(str(self.gausslider.value()))
         if self.current_image.ndim > 2:
             filtered = gaussian(self.overview, sigma=self.gausslider.value())
         else:
@@ -296,6 +296,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         self.showimage(filtered)
 
     def closing(self):
+        self.closelineEdit.setText(str(self.closingslider.value()))
         if self.current_augments["threshold"]:
             self.threshold(self.current_augments["threshold"])
             if self.closingslider.value() > 0:
@@ -316,9 +317,13 @@ level_downsamples = {str(self.image.level_downsamples)}""")
             self.init_scene()
             self.read_excel()
         labeled_image = label(self.current_image)
-        print(labeled_image.shape, labeled_image.max(), labeled_image.min())
-        labeled_image = remove_small_objects(labeled_image, min_size=int(self.smallobs_text.toPlainText()))
-        print(self.smallobs_text.toPlainText())
+        try:
+            min = int(self.smallobs_text.toPlainText())
+        except ValueError as e:
+            self.smallobs_text.setPlainText("6000")
+            min = 6000
+            self.info("remove small value must be an integer - reset to 6000")
+        labeled_image = remove_small_objects(labeled_image, min_size=min)
         print(labeled_image.shape, labeled_image.max(), labeled_image.min())
         np.save("/Users/callum/Desktop/sample images/JLTA2_AA51_split/JLTA2_AA51_split_overlay.np", self.current_image)
         self.showimage(labeled_image)
