@@ -8,7 +8,9 @@ Log any issues in the issues tab and I will try to address them as soon as possi
 Email me for a video of how the exporter works.
 These docs will be updated in the near future. 
 
-
-![labels](./docs/dabanalysis.png) <br>
-![labels](./docs/thresholdselector.png) <br>
 ![labels](./docs/tissuecoreexport.png) <br>
+Tissue core export
+![labels](./docs/thresholdselector.png) <br>
+DAB intensity threshold selection
+![labels](./docs/dabanalysis.png) <br>
+DAB analysis running across all images in a directory
