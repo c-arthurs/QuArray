@@ -7,10 +7,12 @@ At the moment only the mac version is uploaded as I am waiting to deploy it on W
 Log any issues in the issues tab and I will try to address them as soon as possible. 
 Email me for a video of how the exporter works.
 These docs will be updated in the near future. 
-
+<br>
 ![labels](./docs/tissuecoreexport.png) <br>
 Tissue core export
+<br>
 ![labels](./docs/thresholdselector.png) <br>
 DAB intensity threshold selection
+<br>
 ![labels](./docs/dabanalysis.png) <br>
 DAB analysis running across all images in a directory
