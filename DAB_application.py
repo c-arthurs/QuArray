@@ -1,7 +1,7 @@
 # DEPLOY MAC
 # sudo pyinstaller -F --windowed -p /Users/callum/callum/TMAPP/scripts --add-data "/Users/callum/callum/TMAPP/scripts:scripts" --icon=scripts/docs/he.icns DAB_application.py
 # Windows
-# pyinstaller -F --windowed -p C:/Users/Admin/callum/analysis_application/scripts --add-data "C:/Users/Admin/callum/analysis_application/scripts;scripts" --icon=scripts/docs/he.ico DAB_application.py
+# pyinstaller -F --windowed -p C:/Users/Daniel/Downloads/TMAPP-master/TMAPP-master/scripts --add-data "C:/Users/Daniel/Downloads/TMAPP-master/TMAPP-master/scripts;scripts" --icon=scripts/docs/he.ico DAB_application.py
 
 
 import sys
@@ -21,7 +21,7 @@ import numpy as np
 from skimage import color
 from PIL import Image
 
-sys._MEIPASS = '.'  # for running locally
+# sys._MEIPASS = '.'  # for running locally
 
 class MyWindow(QMainWindow):
     def __init__(self):

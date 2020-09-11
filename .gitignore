@@ -7,7 +7,8 @@ APIKEY
 __pycache__/
 *__pycache__/
 *.py[cod]
-
+*.spec
+tests.ipynb
 # C extensions
 *.so
 

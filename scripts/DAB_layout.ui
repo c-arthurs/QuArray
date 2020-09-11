@@ -46,7 +46,7 @@
            </size>
           </property>
           <property name="text">
-           <string>NDPI Exporter</string>
+           <string>Whole Slide Image Exporter</string>
           </property>
          </widget>
         </item>
@@ -59,7 +59,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Set Thresholds</string>
+           <string>Optimise and Set Thresholds</string>
           </property>
           <property name="iconSize">
            <size>
@@ -103,7 +103,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Overlay Figure</string>
+           <string>Overlay Figure Creator (beta)</string>
           </property>
           <property name="iconSize">
            <size>

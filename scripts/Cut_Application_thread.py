@@ -24,7 +24,7 @@ TODO - the current image method is currently not working well - the better way i
 have been applied and then reapply them when the image is needed - for the remove small objects phase
 """
 
-sys._MEIPASS = '.'  # for running locally
+# sys._MEIPASS = '.'  # for running locally
 
 
 # setup the Graphics scene to detect clicks
@@ -130,14 +130,15 @@ class MyWindow(QtWidgets.QWidget):
         self.toggleorigional.clicked.connect(lambda: [self.threshold("origional"), self.reset_sliders()])
         self.gausslider.setMaximum(5)
         self.gausslider.setValue(0)
-        self.gausslider.valueChanged.connect(lambda: self.gauslineEdit.setText(str(self.gausslider.value()))) # change
+        self.gausslider.valueChanged.connect(lambda: self.gauslineEdit.setText(str(self.gausslider.value())))  # change
         self.gausslider.sliderReleased.connect(self.gaus)
         self.closingslider.setMaximum(50)
         self.closingslider.setValue(0)
         self.closingslider.valueChanged.connect(lambda: self.closelineEdit.setText(str(self.closingslider.value())))
         self.closingslider.sliderReleased.connect(self.closing)
         self.removesmallobjects.clicked.connect(self.removesmall)
-        self.current_augments = {"threshold": False, "gausian": False, "closing": False, "overlay_applied" : False}
+        self.current_augments = {"threshold": False, "gausian": False, "closing": False, "overlay_applied": False,
+                                 "manual_overlay": False}
 
         self.init_scene()
         self.show()
@@ -163,6 +164,7 @@ class MyWindow(QtWidgets.QWidget):
         if self.overlaySave.isChecked():
             self.info(f"Overlay saved to - {self.output}")
             self.scene.save(self.output, self.name)
+        self.current_augments["overlay_applied"] = True
 
     def excel(self, x):
         self.excel_layout = x
@@ -185,7 +187,7 @@ class MyWindow(QtWidgets.QWidget):
     def loadndpi(self):
         self.init_scene()
         self.path, _ = QFileDialog.getOpenFileName(parent=self, caption='Open file',
-                                                directory="/Users/callum/Desktop/", filter='*.ndpi;;*.svs', )
+                                                   directory="/Users/callum/Desktop/", filter='*.ndpi;;*.svs', )
         # self.path = "/Users/callum/Desktop/sample images/JLTA2_AA51.ndpi"
         if self.path:
             self.output = os.path.splitext(self.path)[0] + '_split'
@@ -266,6 +268,11 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         self.closingslider.setValue(0)
 
     def threshold(self, threshold_name):
+        if self.current_augments['overlay_applied']:
+            del self.scene.coords
+            self.init_scene()
+            self.read_excel()
+            self.current_augments['overlay_applied'] = False
         if threshold_name == "origional":
             self.showimage(self.overview)
             self.thresholdval = None
@@ -324,8 +331,6 @@ level_downsamples = {str(self.image.level_downsamples)}""")
             min = 6000
             self.info("remove small value must be an integer - reset to 6000")
         labeled_image = remove_small_objects(labeled_image, min_size=min)
-        print(labeled_image.shape, labeled_image.max(), labeled_image.min())
-        np.save("/Users/callum/Desktop/sample images/JLTA2_AA51_split/JLTA2_AA51_split_overlay.np", self.current_image)
         self.showimage(labeled_image)
         labels = regionprops(labeled_image)
         centroid = [r.centroid for r in labels]
