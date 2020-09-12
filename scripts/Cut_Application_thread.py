@@ -409,6 +409,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
                              core_diameter=self.core_diameter, output=self.output, name=self.name, lvl=self.lvl,
                             path=self.path, arrayshape=self.arrayshape, pathology=self.pathology)
 
+
         self.thread = QThread()
         self.export.info.connect(self.info)
         self.export.done.connect(self.complete)
@@ -484,6 +485,7 @@ class Export(QObject):
         self.info.emit('Saving ' + self.output + os.sep + self.name + '_metadata.json')
         with open(self.output + os.sep + self.name + '_metadata.json', "w") as write_file:
             json.dump(jsondata, write_file)
+
 
     def wsifigure(self, higher_resolution=False, pathology=None):
         """
