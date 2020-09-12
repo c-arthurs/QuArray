@@ -9,22 +9,26 @@ from PyQt5.QtGui import QPen, QBrush
 import numpy as np
 import os
 from openpyxl import load_workbook
+from openpyxl.utils.cell import coordinate_from_string, column_index_from_string
+
 import json
 import sys
-from PyQt5.QtWidgets import QFileDialog, QGraphicsItem, QTabWidget
+from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot
 
 from skimage.filters import threshold_otsu, threshold_li, threshold_mean, threshold_triangle, gaussian
 from skimage.color import rgb2gray
 from skimage.morphology import closing, square, remove_small_objects, label
 from skimage.measure import regionprops
+from skimage.transform import resize
+from PIL import Image
 
 """
 TODO - the current image method is currently not working well - the better way is to just save the methods that 
 have been applied and then reapply them when the image is needed - for the remove small objects phase
 """
 
-# sys._MEIPASS = '.'  # for running locally
+sys._MEIPASS = '.'  # for running locally
 
 
 # setup the Graphics scene to detect clicks
@@ -139,6 +143,7 @@ class MyWindow(QtWidgets.QWidget):
         self.removesmallobjects.clicked.connect(self.removesmall)
         self.current_augments = {"threshold": False, "gausian": False, "closing": False, "overlay_applied": False,
                                  "manual_overlay": False}
+        self.pathology = None
 
         self.init_scene()
         self.show()
@@ -356,6 +361,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
             cores = []
             values = []
             rowcount = []
+            self.rowcol = []
             if not self.excel_layout:
                 for row in ws.iter_rows():
                     for cell in row:
@@ -377,7 +383,13 @@ level_downsamples = {str(self.image.level_downsamples)}""")
             self.cores = cores
             self.values = values
             self.rowcount = rowcount
+            self.arrayshape = (ws.max_row, ws.max_column)
             self.scene.rowcount = rowcount
+
+            # check for pathology file
+            if len(wb.sheetnames) > 1:
+                ws = wb.worksheets[1]  # pathology tab (hopefully)
+                self.pathology = [ws[i].value for i in self.cores]
 
     def info(self, text):
         self.label.setText(text)
@@ -395,7 +407,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         self.export = Export(image=self.image, centroid=self.scene.centroid, cores=self.cores,
                              scale_index=self.scale_index,
                              core_diameter=self.core_diameter, output=self.output, name=self.name, lvl=self.lvl,
-                             path=self.path)
+                            path=self.path, arrayshape=self.arrayshape, pathology=self.pathology)
 
         self.thread = QThread()
         self.export.info.connect(self.info)
@@ -424,7 +436,8 @@ class Export(QObject):
     figures = pyqtSignal()
     done = pyqtSignal(bool)
 
-    def __init__(self, image, centroid, cores, scale_index, core_diameter, output, name, lvl, path):
+    def __init__(self, image, centroid, cores, scale_index, core_diameter, output, name, lvl, path, arrayshape,
+                 pathology):
         super().__init__()
         self.image = image
         self.centroid = centroid
@@ -435,6 +448,8 @@ class Export(QObject):
         self.name = name
         self.lvl = lvl
         self.path = path
+        self.arrayshape = arrayshape
+        self.pathology = pathology
 
     @pyqtSlot()
     def run(self):
@@ -443,19 +458,17 @@ class Export(QObject):
 
     def export_images(self, centroid, cores):
         infostr = []
+        self.scaledcent = [(y * self.scale_index, x * self.scale_index) for (x, y) in centroid]  # rotate xy for openslide
+        self.scaledcent = [(int(x - (self.core_diameter / 2)), int(y - (self.core_diameter / 2))) for (x, y) in self.scaledcent]
         self.json_write()
-        # lsize = size * self.scale_index
-        scaledcent = [(y * self.scale_index, x * self.scale_index) for (x, y) in centroid]  # rotate xy for openslide
-        scaledcent = [(int(x - (self.core_diameter / 2)), int(y - (self.core_diameter / 2))) for (x, y) in scaledcent]
+        self.wsifigure(higher_resolution=False, pathology=self.pathology)
         w_h = (self.core_diameter, self.core_diameter)
         self.lvl = 0
-        for i in range(len(scaledcent)):
+        for i in range(len(self.scaledcent)):
             infostr.append("Loading " + self.name + "_" + cores[i] + ".png")
             self.info.emit('\n'.join(infostr))
-            core = self.image.read_region(location=scaledcent[i], level=self.lvl, size=w_h)
+            core = self.image.read_region(location=self.scaledcent[i], level=self.lvl, size=w_h)
             core.save(self.output + os.sep + self.name + "_" + cores[i] + ".png")
-            # mpimg.imsave(self.output + os.sep + self.name + "_" + cores[i] + ".png",
-            #              np.array(core))
             infostr.append("Saved " + self.name + "_" + cores[i] + ".png")
             self.info.emit('\n'.join(infostr))
             self.countChanged.emit(i + 1)
@@ -465,8 +478,56 @@ class Export(QObject):
         self.done.emit(True)
 
     def json_write(self):
-        jsondata = {"path": self.path, "centroid": self.centroid, "cores": self.cores, "diameter": self.core_diameter,
-                    "scale_index": self.scale_index}
+        jsondata = {"path": self.path, "coordinates": self.scaledcent, "cores": self.cores,
+                    "diameter": self.core_diameter, "scale_index": self.scale_index, "lowlevel": int(self.lvl),
+                    "arrayshape": self.arrayshape}
         self.info.emit('Saving ' + self.output + os.sep + self.name + '_metadata.json')
         with open(self.output + os.sep + self.name + '_metadata.json', "w") as write_file:
             json.dump(jsondata, write_file)
+
+    def wsifigure(self, higher_resolution=False, pathology=None):
+        """
+        takes the metadata from the json
+        makes a fig of the locations on the tissue array and saves it
+        higher resolution = int start at 1 and move up to improve resolution - will slow code
+        """
+
+        def overly_path(im, overlay, pathology):
+            if pathology == "N":
+                colour = [0, 1, 0]  # green
+            else:
+                colour = [1, 0, 0]  # red
+            im[overlay == 0] = colour
+            return im
+
+        jsonpath = self.output + os.sep + self.name + '_metadata.json'
+        with open(jsonpath) as json_file:
+            data = json.load(json_file)
+            image = OpenSlide(data['path'])
+            if higher_resolution:
+                lvl = data['lowlevel'] - int(higher_resolution)
+            else:
+                lvl = data['lowlevel']
+            scale_index = image.level_downsamples[lvl]
+            diameter = int(data["diameter"] / scale_index)
+            arrayshape = [a + 1 for a in data['arrayshape']]
+            arrayshape = [(a * diameter) + 1 for a in arrayshape]
+            arrayshape.append(3)
+            figarray = np.ones(arrayshape)
+            cindex = [coordinate_from_string(i) for i in data['cores']]  # returns ('A',4)
+            cindex = [(b, column_index_from_string(a)) for (a, b) in cindex]  # returns index tuples for each core
+            maskcoord = [[y * diameter if y > 1 else y for y in x] for x in cindex]
+
+            if pathology:
+                overlay = np.load(sys._MEIPASS + os.sep + "scripts" + os.sep + "outline.npy")
+                overlay = resize(overlay, (diameter, diameter))
+
+            for i in range(len(data["coordinates"])):  # iterate through coordinates pulling out images from wsi
+                im = image.read_region(location=data["coordinates"][i], level=lvl, size=(diameter, diameter))
+                im = np.array(im)[:, :, :3]
+                if pathology:
+                    im = overly_path(im, overlay, pathology[i])
+                figarray[maskcoord[i][0]:maskcoord[i][0] + diameter, maskcoord[i][1]:maskcoord[i][1] + diameter, :] = im
+            figarray[figarray == [1, 1, 1]] = 255  # make background white
+            savepath = self.output + os.sep + self.name + '_layoutfig.tiff'
+            Image.fromarray(figarray.astype(np.uint8)).save(savepath)
