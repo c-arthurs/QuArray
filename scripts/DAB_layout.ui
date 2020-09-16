@@ -46,7 +46,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Whole Slide Image Exporter</string>
+           <string>TMA WSI Exporter</string>
           </property>
          </widget>
         </item>
