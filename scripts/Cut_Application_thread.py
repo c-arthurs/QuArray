@@ -28,7 +28,7 @@ TODO - the current image method is currently not working well - the better way i
 have been applied and then reapply them when the image is needed - for the remove small objects phase
 """
 
-# sys._MEIPASS = '.'  # for running locally
+sys._MEIPASS = '.'  # for running locally
 
 
 # setup the Graphics scene to detect clicks
@@ -120,7 +120,7 @@ class MyWindow(QtWidgets.QWidget):
         self.load_excel.clicked.connect(lambda: self.read_excel())
         self.overlay.clicked.connect(lambda: self.overlaystart())
         self.export_2.clicked.connect(lambda: self.export_images())
-
+        self.export_again.clicked.connect(lambda: self.export_images(meta_only=True))
         self.current_image = None
 
         # threshold buttons
@@ -394,7 +394,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
     def info(self, text):
         self.label.setText(text)
 
-    def export_images(self):
+    def export_images(self, meta_only=False):
         self.progressBar.setMaximum(len(self.scene.centroid))
         self.activate([self.nameLabel, self.nameLineEdit, self.formatLabel, self.formatLineEdit,
                        self.magnificationLabel, self.magnificationLineEdit, self.scanDateLabel,
@@ -403,12 +403,17 @@ level_downsamples = {str(self.image.level_downsamples)}""")
                        self.numberOfCoresLineEdit, self.diameterLabel, self.diamiterLineEdit,
                        self.export_2, self.overlay, self.excel_btn, self.load_ndpi, self.load_excel, self.overlaySave,
                        self.tabWidget], action=False)
+        try:
+            resolution = int(self.resolution_edit.text())
+            print("new resolution applied")
+        except ValueError as E:
+            resolution = 0
 
         self.export = Export(image=self.image, centroid=self.scene.centroid, cores=self.cores,
                              scale_index=self.scale_index,
                              core_diameter=self.core_diameter, output=self.output, name=self.name, lvl=self.lvl,
-                            path=self.path, arrayshape=self.arrayshape, pathology=self.pathology)
-
+                            path=self.path, arrayshape=self.arrayshape, pathology=self.pathology, resolution=resolution,
+                             meta_only=meta_only)
 
         self.thread = QThread()
         self.export.info.connect(self.info)
@@ -438,7 +443,7 @@ class Export(QObject):
     done = pyqtSignal(bool)
 
     def __init__(self, image, centroid, cores, scale_index, core_diameter, output, name, lvl, path, arrayshape,
-                 pathology):
+                 pathology, resolution, meta_only=False):
         super().__init__()
         self.image = image
         self.centroid = centroid
@@ -451,10 +456,16 @@ class Export(QObject):
         self.path = path
         self.arrayshape = arrayshape
         self.pathology = pathology
+        self.resolution = resolution
+        self.meta_only = meta_only
 
     @pyqtSlot()
     def run(self):
-        self.export_images(self.centroid, self.cores)
+        if self.meta_only:
+            self.json_write()
+            self.wsifigure(higher_resolution=False, pathology=self.pathology)
+        else:
+            self.export_images(self.centroid, self.cores)
         print('exporting')
 
     def export_images(self, centroid, cores):
@@ -489,10 +500,12 @@ class Export(QObject):
 
     def wsifigure(self, higher_resolution=False, pathology=None):
         """
+        TODO: theres an error here that creates a blank line and col on row 1 col 1
         takes the metadata from the json
         makes a fig of the locations on the tissue array and saves it
         higher resolution = int start at 1 and move up to improve resolution - will slow code
         """
+        higher_resolution = self.resolution
 
         def overly_path(im, overlay, pathology):
             if pathology == "N":
@@ -512,13 +525,13 @@ class Export(QObject):
                 lvl = data['lowlevel']
             scale_index = image.level_downsamples[lvl]
             diameter = int(data["diameter"] / scale_index)
-            arrayshape = [a + 1 for a in data['arrayshape']]
+            arrayshape = data['arrayshape']
             arrayshape = [(a * diameter) + 1 for a in arrayshape]
             arrayshape.append(3)
             figarray = np.ones(arrayshape)
             cindex = [coordinate_from_string(i) for i in data['cores']]  # returns ('A',4)
             cindex = [(b, column_index_from_string(a)) for (a, b) in cindex]  # returns index tuples for each core
-            maskcoord = [[y * diameter if y > 1 else y for y in x] for x in cindex]
+            maskcoord = [[y * diameter - diameter if y > 1 else y for y in x] for x in cindex]
 
             if pathology:
                 overlay = np.load(sys._MEIPASS + os.sep + "scripts" + os.sep + "outline.npy")
@@ -528,7 +541,10 @@ class Export(QObject):
                 im = image.read_region(location=data["coordinates"][i], level=lvl, size=(diameter, diameter))
                 im = np.array(im)[:, :, :3]
                 if pathology:
-                    im = overly_path(im, overlay, pathology[i])
+                    try:
+                        im = overly_path(im, overlay, pathology[i])
+                    except:
+                        continue
                 figarray[maskcoord[i][0]:maskcoord[i][0] + diameter, maskcoord[i][1]:maskcoord[i][1] + diameter, :] = im
             figarray[figarray == [1, 1, 1]] = 255  # make background white
             savepath = self.output + os.sep + self.name + '_layoutfig.tiff'
