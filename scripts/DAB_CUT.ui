@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1134</width>
+    <width>1153</width>
     <height>708</height>
    </rect>
   </property>
@@ -154,6 +154,7 @@
          </property>
          <property name="font">
           <font>
+           <pointsize>11</pointsize>
            <kerning>false</kerning>
           </font>
          </property>
@@ -171,6 +172,9 @@
          </property>
          <property name="elideMode">
           <enum>Qt::ElideLeft</enum>
+         </property>
+         <property name="usesScrollButtons">
+          <bool>false</bool>
          </property>
          <widget class="QWidget" name="tab">
           <attribute name="title">
@@ -421,57 +425,27 @@
                </property>
               </widget>
              </item>
-             <item row="11" column="1">
-              <widget class="QLineEdit" name="resolution_edit">
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>0</string>
-               </property>
-              </widget>
-             </item>
-             <item row="11" column="0">
-              <widget class="QLabel" name="label_4">
-               <property name="font">
-                <font>
-                 <pointsize>13</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Fig resolution</string>
-               </property>
-              </widget>
-             </item>
-             <item row="12" column="0" colspan="2">
-              <widget class="QPushButton" name="export_again">
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Re-export metadata and figures</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </item>
           </layout>
          </widget>
          <widget class="QWidget" name="tab_2">
           <attribute name="title">
-           <string>Auto-Thresholder</string>
+           <string>Thresholding</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
             <widget class="QGroupBox" name="groupBox_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>146</height>
+               <height>229</height>
               </size>
              </property>
              <property name="font">
@@ -484,7 +458,7 @@
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_8">
               <property name="spacing">
-               <number>1</number>
+               <number>-1</number>
               </property>
               <property name="leftMargin">
                <number>2</number>
@@ -500,6 +474,12 @@
               </property>
               <item>
                <widget class="QPushButton" name="otsu">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
@@ -512,6 +492,12 @@
               </item>
               <item>
                <widget class="QPushButton" name="threshli">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
@@ -524,6 +510,12 @@
               </item>
               <item>
                <widget class="QPushButton" name="threshtriangle">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
@@ -536,6 +528,12 @@
               </item>
               <item>
                <widget class="QPushButton" name="threshmean">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
@@ -551,7 +549,7 @@
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>0</height>
+                  <height>20</height>
                  </size>
                 </property>
                 <property name="font">
@@ -564,45 +562,13 @@
                 </property>
                </widget>
               </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="title">
-              <string>Threshold Settings</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_7">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>4</number>
-              </property>
-              <property name="topMargin">
-               <number>6</number>
-              </property>
-              <property name="rightMargin">
-               <number>4</number>
-              </property>
-              <property name="bottomMargin">
-               <number>4</number>
-              </property>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_4">
                 <property name="sizeConstraint">
                  <enum>QLayout::SetMinimumSize</enum>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
                 </property>
                 <item>
                  <widget class="QLabel" name="label_2">
@@ -615,7 +581,7 @@
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>0</height>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="font">
@@ -635,6 +601,12 @@
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
                   </property>
                   <property name="minimum">
                    <number>0</number>
@@ -674,6 +646,12 @@
                 </item>
                 <item>
                  <widget class="QLineEdit" name="gauslineEdit">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
                   <property name="maximumSize">
                    <size>
                     <width>30</width>
@@ -708,7 +686,7 @@
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>0</height>
+                    <height>20</height>
                    </size>
                   </property>
                   <property name="font">
@@ -728,6 +706,12 @@
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
                   </property>
                   <property name="value">
                    <number>30</number>
@@ -758,6 +742,12 @@
                 </item>
                 <item>
                  <widget class="QLineEdit" name="closelineEdit">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
                   <property name="maximumSize">
                    <size>
                     <width>30</width>
@@ -786,6 +776,15 @@
                 </property>
                 <item>
                  <widget class="QPushButton" name="removesmallobjects">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <pointsize>11</pointsize>
@@ -798,6 +797,12 @@
                 </item>
                 <item>
                  <widget class="QLineEdit" name="smallobs_text">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
                   <property name="maximumSize">
                    <size>
                     <width>40</width>
@@ -815,6 +820,138 @@
                  </widget>
                 </item>
                </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_3">
+          <attribute name="title">
+           <string>Fig Settings</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QGroupBox" name="groupBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="title">
+              <string>Figure Settings</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout">
+              <property name="leftMargin">
+               <number>4</number>
+              </property>
+              <property name="topMargin">
+               <number>6</number>
+              </property>
+              <property name="rightMargin">
+               <number>4</number>
+              </property>
+              <property name="bottomMargin">
+               <number>4</number>
+              </property>
+              <property name="spacing">
+               <number>-1</number>
+              </property>
+              <item row="3" column="1">
+               <widget class="QLineEdit" name="resolution_edit">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>40</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0" colspan="2">
+               <widget class="QRadioButton" name="radioButton">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Include Pathology</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+                <property name="autoExclusive">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_4">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Added Resolution</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0" colspan="2">
+               <widget class="QPushButton" name="export_again">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Re-export metadata and figures</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -950,7 +1087,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>1018</width>
+          <width>1037</width>
           <height>77</height>
          </rect>
         </property>

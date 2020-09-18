@@ -21,7 +21,7 @@ import numpy as np
 from skimage import color
 from PIL import Image
 
-sys._MEIPASS = '.'  # for running locally
+# sys._MEIPASS = '.'  # for running locally
 
 class MyWindow(QMainWindow):
     def __init__(self):

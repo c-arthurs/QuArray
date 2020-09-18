@@ -28,7 +28,7 @@ TODO - the current image method is currently not working well - the better way i
 have been applied and then reapply them when the image is needed - for the remove small objects phase
 """
 
-sys._MEIPASS = '.'  # for running locally
+# sys._MEIPASS = '.'  # for running locally
 
 
 # setup the Graphics scene to detect clicks
