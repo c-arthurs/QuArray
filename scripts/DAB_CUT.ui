@@ -162,7 +162,7 @@
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <property name="iconSize">
           <size>
@@ -782,7 +782,7 @@
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>20</height>
+                    <height>23</height>
                    </size>
                   </property>
                   <property name="font">
@@ -907,7 +907,7 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Include Pathology</string>
+                 <string>Include Pathology (if available)</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>

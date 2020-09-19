@@ -28,7 +28,7 @@ TODO - the current image method is currently not working well - the better way i
 have been applied and then reapply them when the image is needed - for the remove small objects phase
 """
 
-# sys._MEIPASS = '.'  # for running locally
+sys._MEIPASS = '.'  # for running locally
 
 
 # setup the Graphics scene to detect clicks
@@ -170,6 +170,7 @@ class MyWindow(QtWidgets.QWidget):
             self.info(f"Overlay saved to - {self.output}")
             self.scene.save(self.output, self.name)
         self.current_augments["overlay_applied"] = True
+        self.activate([self.export_2], action=True)
 
     def excel(self, x):
         self.excel_layout = x
@@ -235,7 +236,8 @@ level_downsamples = {str(self.image.level_downsamples)}""")
             self.activate([self.nameLabel, self.nameLineEdit, self.formatLabel, self.formatLineEdit,
                            self.magnificationLabel, self.magnificationLineEdit, self.scanDateLabel,
                            self.scanDateLineEdit, self.dimensionsLabel, self.dimensionsLineEdit, self.overlayLevelLabel,
-                           self.overlayLevelLineEdit, self.graphicsView, self.overlaySave])
+                           self.overlayLevelLineEdit, self.graphicsView, self.overlaySave, self.groupBox_2,
+                           self.removesmallobjects])
             self.get_overview()
             if os.path.exists(os.path.splitext(self.path)[0] + '.xlsx'):
                 self.read_excel()
@@ -347,7 +349,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
 
     def read_excel(self):
         self.activate([self.numberOfCoresLabel, self.numberOfCoresLineEdit, self.diameterLabel, self.diamiterLineEdit,
-                       self.export_2, self.overlay, self.progressBar, self.excel_btn, self.overlaySave, self.tabWidget])
+                       self.overlay, self.progressBar, self.excel_btn, self.overlaySave, self.tabWidget])
         if not hasattr(self, 'path'):
             self.excelpath, _ = QFileDialog.getOpenFileName(parent=self, caption='Open file',
                                                             directory="/Users/callum/Desktop", filter='*.xlsx')
@@ -441,6 +443,7 @@ class Export(QObject):
     countChanged = pyqtSignal(int)
     figures = pyqtSignal()
     done = pyqtSignal(bool)
+    writemeta = pyqtSignal(bool)  # TODO - link this to write the metadata for the image export
 
     def __init__(self, image, centroid, cores, scale_index, core_diameter, output, name, lvl, path, arrayshape,
                  pathology, resolution, meta_only=False):
@@ -500,7 +503,7 @@ class Export(QObject):
 
     def wsifigure(self, higher_resolution=False, pathology=None):
         """
-        TODO: theres an error here that creates a blank line and col on row 1 col 1
+        TODO: need to link this better to the actual script - rather than the meta file before its created
         takes the metadata from the json
         makes a fig of the locations on the tissue array and saves it
         higher resolution = int start at 1 and move up to improve resolution - will slow code
