@@ -61,7 +61,6 @@ class GraphicsScene(QGraphicsScene):
             self.coords.append((x, y))
             self.elipse_adder(x, y)
 
-
     def keyPressEvent(self, e): # hit space to remove point
         if e.key() == Qt.Key_Space:
             if len(self.circles) >= 1:
@@ -93,6 +92,8 @@ class GraphicsScene(QGraphicsScene):
         if autopilot:
             self.centroid = self.coords
             self.centroid = self.sortCentroid(self.centroid)
+            [self.elipse_adder(y, x) for (x, y) in self.centroid]
+            self.coords = [(y, x) for (x, y) in self.centroid]
         else:
             self.centroid = [(y, x) for (x, y) in self.coords]
             self.centroid = [(self.centroid[i][0]+self.circles[i].scenePos().y(), self.centroid[i][1]+self.circles[i].scenePos().x()) for i in range(len(self.circles))]
