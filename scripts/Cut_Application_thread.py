@@ -40,8 +40,14 @@ class GraphicsScene(QGraphicsScene):
         self.rectsandtext = []
         self.parent = MyWindow
 
+    def reset(self):
+        [self.circles[i].setVisible(False) for i in range(len(self.circles))]
+        self.coords = []
+        self.circles = []
+        self.rectsandtext = []
+
     def elipse_adder(self, x, y):
-        pen = QPen(QtCore.Qt.black)
+        pen = QPen(QtGui.QColor(69, 130, 201, 200))  # QColor(128, 128, 255, 128)
         pen.setWidthF(10)  # border width
         brush = QBrush(QtCore.Qt.transparent)
         elipse = self.addEllipse(x - 25, y - 25, 50, 50, pen, brush)
@@ -86,9 +92,9 @@ class GraphicsScene(QGraphicsScene):
         if len(self.rectsandtext) >= 1:
             [i.setVisible(False) for i in self.rectsandtext]
             self.rectsandtext = []
-        pen = QPen(QtCore.Qt.green)
+        pen = QPen(QtGui.QColor(69, 130, 201, 240))
         pen.setWidthF(6)  # border width
-        brush = QBrush(QtCore.Qt.transparent)
+        brush = QBrush(QtGui.QColor(215, 230, 248, 160))  # square fill
         if autopilot:
             self.centroid = self.coords
             self.centroid = self.sortCentroid(self.centroid)
@@ -108,7 +114,7 @@ class GraphicsScene(QGraphicsScene):
                 self.rectsandtext.append(rect)
                 self.rectsandtext.append(text)
                 text.setPos(x, y)
-                text.setDefaultTextColor(QtCore.Qt.green)
+                text.setDefaultTextColor(QtGui.QColor(35, 57, 82, 200))
                 font = QtGui.QFont()
                 font.setPointSize(80)
                 text.setFont(font)
@@ -297,6 +303,8 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         self.closingslider.setValue(0)
 
     def threshold(self, threshold_name):
+        if self.scene.circles:
+            self.scene.reset()
         if self.current_augments['overlay_applied']:
             del self.scene.coords
             self.init_scene()
