@@ -131,7 +131,7 @@ class GraphicsScene(QGraphicsScene):
 class MyWindow(QtWidgets.QWidget):
     def __init__(self):
         super(MyWindow, self).__init__()
-        uic.loadUi(sys._MEIPASS + os.sep + "scripts" + os.sep + "DAB_CUT.ui", self)  # for deployment
+        uic.loadUi(sys._MEIPASS + os.sep + "scripts" + os.sep + "Cut_Application_thread_layout.ui", self)  # deployment
 
         self.tabWidget.setStyleSheet("QTabWidget::pane {margin: 0px,0px,0px,0px; padding: 0px}")
 
@@ -165,6 +165,7 @@ class MyWindow(QtWidgets.QWidget):
         self.current_augments = {"threshold": False, "gausian": False, "closing": False, "overlay_applied": False,
                                  "manual_overlay": False}
         self.pathology = None
+        self.excelpath = False
 
         self.init_scene()
         self.show()
@@ -195,7 +196,7 @@ class MyWindow(QtWidgets.QWidget):
 
     def excel(self, x):
         self.excel_layout = x
-        if hasattr(self, 'excelpath'):
+        if self.excelpath:
             self.read_excel()
 
     def init_scene(self):
@@ -215,7 +216,6 @@ class MyWindow(QtWidgets.QWidget):
         self.init_scene()
         self.path, _ = QFileDialog.getOpenFileName(parent=self, caption='Open file',
                                                    directory="/Users/callum/Desktop/", filter='*.ndpi;;*.svs', )
-        # self.path = "/Users/callum/Desktop/sample images/JLTA2_AA51.ndpi"
         if self.path:
             self.output = os.path.splitext(self.path)[0] + '_split'
             if not os.path.exists(self.output):  # make output directory
@@ -224,9 +224,7 @@ class MyWindow(QtWidgets.QWidget):
             self.name = os.path.split(self.output)[-1]
             self.nameLineEdit.setText(self.name)
             self.load_ndpi.setStyleSheet("background-color: rgb(0,90,0)")
-            print(self.path)
             self.image = OpenSlide(self.path)
-
             print(self.path + ' read to memory')
             print('    slide format = ' + str(OpenSlide.detect_format(self.path)))
             if str(OpenSlide.detect_format(self.path)) == "aperio":
@@ -261,7 +259,10 @@ level_downsamples = {str(self.image.level_downsamples)}""")
                            self.removesmallobjects])
             self.get_overview()
             if os.path.exists(os.path.splitext(self.path)[0] + '.xlsx'):
+                self.excelpath = os.path.splitext(self.path)[0] + '.xlsx'
                 self.read_excel()
+            else:
+                self.excelpath = False
 
     def get_overview(self):
         self.width_height = [
@@ -369,13 +370,14 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         self.current_augments['overlay_applied'] = True
 
     def read_excel(self):
-        self.activate([self.numberOfCoresLabel, self.numberOfCoresLineEdit, self.diameterLabel, self.diamiterLineEdit,
-                       self.overlay, self.progressBar, self.excel_btn, self.overlaySave, self.tabWidget])
-        if not hasattr(self, 'path'):
+        if not self.excelpath:
             self.excelpath, _ = QFileDialog.getOpenFileName(parent=self, caption='Open file',
                                                             directory="/Users/callum/Desktop", filter='*.xlsx')
-        else:
-            self.excelpath = os.path.splitext(self.path)[0] + '.xlsx'
+        self.activate(
+            [self.numberOfCoresLabel, self.numberOfCoresLineEdit, self.diameterLabel, self.diamiterLineEdit,
+             self.overlay, self.progressBar, self.excel_btn, self.overlaySave, self.tabWidget])
+        # else:
+        #     self.excelpath = os.path.splitext(self.path)[0] + '.xlsx'
         if self.excelpath:
             self.load_excel.setStyleSheet("background-color: rgb(0,90,0)")
             excelname = self.excelpath
@@ -418,6 +420,9 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         self.label.setText(text)
 
     def export_images(self, meta_only=False):
+        if not self.scene.centroid:
+            self.info("must overlay some selected core - double click on image")
+            return
         self.progressBar.setMaximum(len(self.scene.centroid))
         self.activate([self.nameLabel, self.nameLineEdit, self.formatLabel, self.formatLineEdit,
                        self.magnificationLabel, self.magnificationLineEdit, self.scanDateLabel,

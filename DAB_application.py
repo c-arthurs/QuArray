@@ -28,7 +28,7 @@ class MyWindow(QMainWindow):
         super(MyWindow, self).__init__()
 
         # uic.loadUi('./scripts/DAB_layout.ui', self)
-        uic.loadUi(sys._MEIPASS+ os.sep +"scripts" +os.sep +"DAB_layout.ui", self) # for deployment
+        uic.loadUi(sys._MEIPASS+ os.sep +"scripts" +os.sep +"MainWindow_layout.ui", self) # for deployment
 
         self.statusBar()
         self.setWindowTitle('DAB Intensity Analyser')
@@ -137,17 +137,22 @@ class SecondWindow(QtWidgets.QWidget):
 
     def __init__(self):
         super(SecondWindow, self).__init__()
-        # uic.loadUi('./scripts/Threshold_Layout.ui', self)
-        uic.loadUi(sys._MEIPASS+ os.sep +"scripts" +os.sep +"Threshold_Layout.ui", self) # for deployment
+        uic.loadUi(sys._MEIPASS + os.sep +"scripts" + os.sep + "Threshold_selector_Layout.ui", self)  # for deployment
 
         self.slider.setSingleStep(1)
         self.slider.valueChanged[int].connect(self.sliderchange)
         self.setWindowTitle('Set DAB Thresholds')
         self.setWindowOpacity(0.96)
+        # scene 1
         scene = QtWidgets.QGraphicsScene()
         self.pixmap = QtWidgets.QGraphicsPixmapItem()
         scene.addItem(self.pixmap)
         self.graphicsView.setScene(scene)
+        # scene 2
+        scene_2 = QtWidgets.QGraphicsScene()
+        self.pixmap_2 = QtWidgets.QGraphicsPixmapItem()
+        scene_2.addItem(self.pixmap_2)
+        self.graphicsView_2.setScene(scene_2)
         self.trainingbutton.clicked.connect(lambda: self.getpath())
         self.imagebutton.clicked.connect(lambda: self.sampleimage())
         self.togglebtn.clicked.connect(lambda: self.toggle())
@@ -191,7 +196,15 @@ class SecondWindow(QtWidgets.QWidget):
             print(self.randpath)
             self.img = np.array(Image.open(self.path + os.sep + self.randpath))[:, :, :3]
             # self.img = mpimg.imread(self.path + os.sep + self.randpath)[:, :, :3]
-            self.img = self.img[::4, ::4]
+            self.img = self.img[::2, ::2] # todo scale this better
+
+            showim = qimage2ndarray.array2qimage(self.img, normalize=True)
+            showim = QtGui.QPixmap(showim)
+            showim = showim.scaledToWidth(484)
+            showim = showim.scaledToHeight(356)
+            self.pixmap_2.setPixmap(showim)
+            self.graphicsView_2.fitInView(self.graphicsView_2.sceneRect(), QtCore.Qt.KeepAspectRatio)
+
             # prep for analysis
             img_hsv = color.rgb2hsv(self.img)
             self.img_hue = img_hsv[:, :, 0]
