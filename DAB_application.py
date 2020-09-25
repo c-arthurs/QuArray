@@ -99,7 +99,7 @@ class MyWindow(QMainWindow):
         self.graphicsView.fitInView(self.graphicsView.sceneRect(), QtCore.Qt.KeepAspectRatio)
 
     def thresh_action(self):  # select file(s) button 2
-        self.SW = SecondWindow()
+        self.SW = ThresholdSelectorWindow()
         self.SW.show()
         self.SW.signal.connect(self.updatethresholds)
 
@@ -132,12 +132,12 @@ class MyWindow(QMainWindow):
         self.graphicsView.fitInView(self.graphicsView.sceneRect(), QtCore.Qt.KeepAspectRatio)
 
 
-class SecondWindow(QtWidgets.QWidget):
+class ThresholdSelectorWindow(QtWidgets.QWidget):
     signal = QtCore.pyqtSignal(int)
 
     def __init__(self):
-        super(SecondWindow, self).__init__()
-        uic.loadUi(sys._MEIPASS + os.sep +"scripts" + os.sep + "Threshold_selector_Layout.ui", self)  # for deployment
+        super(ThresholdSelectorWindow, self).__init__()
+        uic.loadUi(sys._MEIPASS + os.sep +"scripts" + os.sep + "Threshold_selector_Layout.ui", self)
 
         self.slider.setSingleStep(1)
         self.slider.valueChanged[int].connect(self.sliderchange)
@@ -153,6 +153,17 @@ class SecondWindow(QtWidgets.QWidget):
         self.pixmap_2 = QtWidgets.QGraphicsPixmapItem()
         scene_2.addItem(self.pixmap_2)
         self.graphicsView_2.setScene(scene_2)
+        # scene 3 - graphicsView_zoom1
+        scene_3 = QtWidgets.QGraphicsScene()
+        self.pixmap_3 = QtWidgets.QGraphicsPixmapItem()
+        scene_3.addItem(self.pixmap_3)
+        self.graphicsView_zoom1.setScene(scene_3)
+        # scene 4 - graphicsView_zoom2
+        scene_4 = QtWidgets.QGraphicsScene()
+        self.pixmap_4 = QtWidgets.QGraphicsPixmapItem()
+        scene_4.addItem(self.pixmap_4)
+        self.graphicsView_zoom2.setScene(scene_4)
+
         self.trainingbutton.clicked.connect(lambda: self.getpath())
         self.imagebutton.clicked.connect(lambda: self.sampleimage())
         self.togglebtn.clicked.connect(lambda: self.toggle())
@@ -180,6 +191,7 @@ class SecondWindow(QtWidgets.QWidget):
             self.dablbl.setEnabled(True)
             self.lbl2.setEnabled(True)
             self.lbl.setText(self.path)
+            self.sampleimage()  # get a sample image
             print(self.path)
 
     def settext(self, text):
@@ -196,7 +208,17 @@ class SecondWindow(QtWidgets.QWidget):
             print(self.randpath)
             self.img = np.array(Image.open(self.path + os.sep + self.randpath))[:, :, :3]
             # self.img = mpimg.imread(self.path + os.sep + self.randpath)[:, :, :3]
-            self.img = self.img[::2, ::2] # todo scale this better
+            center = int(self.img.shape[0] / 2)
+            print(center)
+            self.zoomimg = self.img[center - 256:center + 256, center - 256:center + 256, :]
+            zoomimg = qimage2ndarray.array2qimage(self.zoomimg, normalize=True)
+            zoomimg = QtGui.QPixmap(zoomimg)
+            self.pixmap_4.setPixmap(zoomimg)
+            self.graphicsView_zoom2.fitInView(self.graphicsView_zoom2.sceneRect(), QtCore.Qt.KeepAspectRatio)
+            self.pixmap_3.setPixmap(zoomimg)
+            self.graphicsView_zoom1.fitInView(self.graphicsView_zoom1.sceneRect(), QtCore.Qt.KeepAspectRatio)
+
+            self.img = self.img[::4, ::4]  # todo scale this better
 
             showim = qimage2ndarray.array2qimage(self.img, normalize=True)
             showim = QtGui.QPixmap(showim)
@@ -209,6 +231,9 @@ class SecondWindow(QtWidgets.QWidget):
             img_hsv = color.rgb2hsv(self.img)
             self.img_hue = img_hsv[:, :, 0]
             self.image_sat = img_hsv[:, :, 1]
+            img_hsv_zoom = color.rgb2hsv(self.zoomimg)
+            self.img_hue_sml = img_hsv_zoom[:, :, 0]
+            self.image_sat_sml = img_hsv_zoom[:, :, 1]
             self.slider.setMaximum((self.image_sat.max()) * 100)
             self.slider.setMinimum((self.image_sat.min()) * 100)
             self.togimg = qimage2ndarray.array2qimage(self.img, normalize=True)
@@ -219,17 +244,35 @@ class SecondWindow(QtWidgets.QWidget):
             self.graphicsView.fitInView(self.graphicsView.sceneRect(), QtCore.Qt.KeepAspectRatio)
             return
 
+    def resizeEvent(self, event):
+        QMainWindow.resizeEvent(self, event)
+        self.graphicsView.fitInView(self.graphicsView.sceneRect(), QtCore.Qt.KeepAspectRatio)
+        self.graphicsView_2.fitInView(self.graphicsView_2.sceneRect(), QtCore.Qt.KeepAspectRatio)
+        self.graphicsView_zoom1.fitInView(self.graphicsView_zoom1.sceneRect(), QtCore.Qt.KeepAspectRatio)
+        self.graphicsView_zoom2.fitInView(self.graphicsView_zoom2.sceneRect(), QtCore.Qt.KeepAspectRatio)
+        self.show()
+
     def sliderchange(self, value):
         if hasattr(self, "img"):
             self.slbl.setText(str(value))
+            # large image
             hue = np.logical_and(self.img_hue > 0.02, self.img_hue < 0.10)  # BROWN PIXELS BETWEEN 0.02 and 0.10
             img = np.logical_and(hue, self.image_sat > value / 100)
             img = qimage2ndarray.array2qimage(img, normalize=True)
             img = QtGui.QPixmap(img)
-            img = img.scaledToWidth(484)
-            img = img.scaledToHeight(356)
+            # img = img.scaledToWidth(484)
+            # img = img.scaledToHeight(356)
             self.pixmap.setPixmap(img)
             self.graphicsView.fitInView(self.graphicsView.sceneRect(), QtCore.Qt.KeepAspectRatio)
+            #small image
+            hue = np.logical_and(self.img_hue_sml > 0.02, self.img_hue_sml < 0.10)  # BROWN PIXELS BETWEEN 0.02 and 0.10
+            img = np.logical_and(hue, self.image_sat_sml > value / 100)
+            img = qimage2ndarray.array2qimage(img, normalize=True)
+            img = QtGui.QPixmap(img)
+            # img = img.scaledToWidth(484)
+            # img = img.scaledToHeight(356)
+            self.pixmap_3.setPixmap(img)
+            self.graphicsView_zoom1.fitInView(self.graphicsView_zoom1.sceneRect(), QtCore.Qt.KeepAspectRatio)
 
     def toggle(self):
         if hasattr(self, "togimg"):
