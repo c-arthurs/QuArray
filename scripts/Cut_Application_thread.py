@@ -56,13 +56,19 @@ class GraphicsScene(QGraphicsScene):
             elipse.setFlag(QGraphicsItem.ItemIsFocusable, True)
             elipse.setAcceptHoverEvents(True)
             self.circles.append(elipse)
+        print(btn)
+        print(self.coords)
+
+    def mouseClickEvent(self, event):
+        x = event.scenePos().x()
+        y = event.scenePos().y()
+        btn = event.button()
         if btn == 2 and len(self.coords) >= 1:  # right click
             pen = QPen(QtCore.Qt.red)
             brush = QBrush(QtCore.Qt.red)
-            self.addEllipse(self.coords[-1][0] - 25, self.coords[-1][1] - 25, 50, 50, pen, brush)
+            self.circles[-1].removeFromIndex()
             self.coords = self.coords[:-1]
-        print(btn)
-        print(self.coords)
+
 
     def sortCentroid(self, centroid):
         sortList = []
