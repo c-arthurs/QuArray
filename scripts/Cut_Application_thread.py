@@ -2,7 +2,7 @@ from PyQt5 import uic
 from PyQt5.QtCore import *
 from PyQt5 import QtCore
 from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtWidgets import QGraphicsScene
+from PyQt5.QtWidgets import QGraphicsScene, QGraphicsItem
 from openslide import OpenSlide
 import qimage2ndarray
 from PyQt5.QtGui import QPen, QBrush
@@ -36,9 +36,10 @@ class GraphicsScene(QGraphicsScene):
     def __init__(self, parent=None):
         QGraphicsScene.__init__(self, parent)
         self.coords = []
+        self.circles = []
         self.parent = MyWindow
 
-    def mousePressEvent(self, event):
+    def mouseDoubleClickEvent(self, event):
         pen = QPen(QtCore.Qt.black)
         pen.setWidthF(10)  # border width
         brush = QBrush(QtCore.Qt.transparent)
@@ -47,7 +48,14 @@ class GraphicsScene(QGraphicsScene):
         btn = event.button()
         if btn == 1:  # left click
             self.coords.append((x, y))
-            self.addEllipse(x - 25, y - 25, 50, 50, pen, brush)
+            elipse = self.addEllipse(x - 25, y - 25, 50, 50, pen, brush)
+            elipse.setAcceptDrops(True)
+            elipse.setCursor(Qt.OpenHandCursor)
+            elipse.setFlag(QGraphicsItem.ItemIsSelectable, True)
+            elipse.setFlag(QGraphicsItem.ItemIsMovable, True)
+            elipse.setFlag(QGraphicsItem.ItemIsFocusable, True)
+            elipse.setAcceptHoverEvents(True)
+            self.circles.append(elipse)
         if btn == 2 and len(self.coords) >= 1:  # right click
             pen = QPen(QtCore.Qt.red)
             brush = QBrush(QtCore.Qt.red)
