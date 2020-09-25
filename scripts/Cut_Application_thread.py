@@ -37,38 +37,37 @@ class GraphicsScene(QGraphicsScene):
         QGraphicsScene.__init__(self, parent)
         self.coords = []
         self.circles = []
+        self.rectsandtext = []
         self.parent = MyWindow
 
-    def mouseDoubleClickEvent(self, event):
+    def elipse_adder(self, x, y):
         pen = QPen(QtCore.Qt.black)
         pen.setWidthF(10)  # border width
         brush = QBrush(QtCore.Qt.transparent)
+        elipse = self.addEllipse(x - 25, y - 25, 50, 50, pen, brush)
+        elipse.setAcceptDrops(True)
+        elipse.setCursor(Qt.OpenHandCursor)
+        elipse.setFlag(QGraphicsItem.ItemIsSelectable, True)
+        elipse.setFlag(QGraphicsItem.ItemIsMovable, True)
+        elipse.setFlag(QGraphicsItem.ItemIsFocusable, True)
+        elipse.setAcceptHoverEvents(True)
+        self.circles.append(elipse)
+
+    def mouseDoubleClickEvent(self, event):
         x = event.scenePos().x()
         y = event.scenePos().y()
         btn = event.button()
         if btn == 1:  # left click
             self.coords.append((x, y))
-            elipse = self.addEllipse(x - 25, y - 25, 50, 50, pen, brush)
-            elipse.setAcceptDrops(True)
-            elipse.setCursor(Qt.OpenHandCursor)
-            elipse.setFlag(QGraphicsItem.ItemIsSelectable, True)
-            elipse.setFlag(QGraphicsItem.ItemIsMovable, True)
-            elipse.setFlag(QGraphicsItem.ItemIsFocusable, True)
-            elipse.setAcceptHoverEvents(True)
-            self.circles.append(elipse)
-        print(btn)
-        print(self.coords)
+            self.elipse_adder(x, y)
 
-    def mouseClickEvent(self, event):
-        x = event.scenePos().x()
-        y = event.scenePos().y()
-        btn = event.button()
-        if btn == 2 and len(self.coords) >= 1:  # right click
-            pen = QPen(QtCore.Qt.red)
-            brush = QBrush(QtCore.Qt.red)
-            self.circles[-1].removeFromIndex()
-            self.coords = self.coords[:-1]
 
+    def keyPressEvent(self, e): # hit space to remove point
+        if e.key() == Qt.Key_Space:
+            if len(self.circles) >= 1:
+                self.circles[-1].setVisible(False)
+                self.circles = self.circles[:-1]
+                self.coords = self.coords[:-1]
 
     def sortCentroid(self, centroid):
         sortList = []
@@ -85,6 +84,9 @@ class GraphicsScene(QGraphicsScene):
         return sortedCentroid
 
     def overlay_cores(self, core_diameter, scale_index, cores, autopilot=False):  # removed - centroid, image, cores
+        if len(self.rectsandtext) >= 1:
+            [i.setVisible(False) for i in self.rectsandtext]
+            self.rectsandtext = []
         pen = QPen(QtCore.Qt.green)
         pen.setWidthF(6)  # border width
         brush = QBrush(QtCore.Qt.transparent)
@@ -93,13 +95,17 @@ class GraphicsScene(QGraphicsScene):
             self.centroid = self.sortCentroid(self.centroid)
         else:
             self.centroid = [(y, x) for (x, y) in self.coords]
+            self.centroid = [(self.centroid[i][0]+self.circles[i].scenePos().y(), self.centroid[i][1]+self.circles[i].scenePos().x()) for i in range(len(self.circles))]
+            print(self.centroid, "centroid")
         print("len - ", len(self.coords))
         diameter = core_diameter / scale_index
         a = 0
         for y, x in self.centroid:
             try:
-                self.addRect((x - (diameter / 2)), (y - (diameter / 2)), diameter, diameter, pen, brush)
+                rect = self.addRect((x - (diameter / 2)), (y - (diameter / 2)), diameter, diameter, pen, brush)
                 text = self.addText(cores[a])  # label
+                self.rectsandtext.append(rect)
+                self.rectsandtext.append(text)
                 text.setPos(x, y)
                 text.setDefaultTextColor(QtCore.Qt.green)
                 font = QtGui.QFont()
