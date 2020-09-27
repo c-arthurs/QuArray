@@ -7,7 +7,7 @@ At the moment only the mac version is uploaded as I am waiting to deploy it on W
 Log any issues in the issues tab and I will try to address them as soon as possible. 
 Email me for a video of how the exporter works.
 <br><br>
-![labels](docs/images/TMAPP main screen.png) <br>
+![labels](docs/images/TMAPP_main_screen.png) <br>
 Tissue core export
 <br>
 ![labels](docs/images/Cut_application_screen.png) <br>
