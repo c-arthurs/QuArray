@@ -8,11 +8,11 @@ Log any issues in the issues tab and I will try to address them as soon as possi
 Email me for a video of how the exporter works.
 These docs will be updated in the near future. 
 <br>
-![labels](./docs/tissuecoreexport.png) <br>
+![labels](docs/images/TMAPP main screen.png) <br>
 Tissue core export
 <br>
-![labels](./docs/thresholdselector.png) <br>
+![labels](docs/images/Cut_application_screen.png) <br>
 DAB intensity threshold selection
 <br>
-![labels](./docs/dabanalysis.png) <br>
+![labels](docs/images/Threshold_selector_screen.png) <br>
 DAB analysis running across all images in a directory

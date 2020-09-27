@@ -222,8 +222,8 @@ class ThresholdSelectorWindow(QtWidgets.QWidget):
 
             showim = qimage2ndarray.array2qimage(self.img, normalize=True)
             showim = QtGui.QPixmap(showim)
-            showim = showim.scaledToWidth(484)
-            showim = showim.scaledToHeight(356)
+            # showim = showim.scaledToWidth(484)
+            # showim = showim.scaledToHeight(356)
             self.pixmap_2.setPixmap(showim)
             self.graphicsView_2.fitInView(self.graphicsView_2.sceneRect(), QtCore.Qt.KeepAspectRatio)
 
@@ -238,8 +238,8 @@ class ThresholdSelectorWindow(QtWidgets.QWidget):
             self.slider.setMinimum((self.image_sat.min()) * 100)
             self.togimg = qimage2ndarray.array2qimage(self.img, normalize=True)
             self.togimg = QtGui.QPixmap(self.togimg)
-            self.togimg = self.togimg.scaledToWidth(484)
-            self.togimg = self.togimg.scaledToHeight(356)
+            # self.togimg = self.togimg.scaledToWidth(484)
+            # self.togimg = self.togimg.scaledToHeight(356)
             self.pixmap.setPixmap(self.togimg)
             self.graphicsView.fitInView(self.graphicsView.sceneRect(), QtCore.Qt.KeepAspectRatio)
             return

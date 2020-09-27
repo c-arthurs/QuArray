@@ -49,6 +49,7 @@ class DabAnalysis(QThread):
                 self.countChanged.emit(int(i)+1)  # EMIT the loading bar
             self.info.emit(file + " analysed")
             i += 1
+        # TODO can make this more lightweight by removing pandas and using csv
         df = pd.DataFrame(analysis, columns=('CoreName', 'AMTsignal', 'Mean_intensity', 'Standard_Dev_intensity',
                                              'AMTtissue'))
         df['AFperAMTT'] = df['AMTsignal']/df['AMTtissue']*100

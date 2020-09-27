@@ -162,7 +162,7 @@
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>2</number>
          </property>
          <property name="iconSize">
           <size>
@@ -924,7 +924,7 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>0</string>
+                 <string>1</string>
                 </property>
                </widget>
               </item>
@@ -967,24 +967,6 @@
                 </property>
                 <property name="text">
                  <string>Added Resolution</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0" colspan="2">
-               <widget class="QPushButton" name="export_again">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>11</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Re-export metadata and figures</string>
                 </property>
                </widget>
               </item>

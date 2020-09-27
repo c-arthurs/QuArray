@@ -56,6 +56,7 @@ class GraphicsScene(QGraphicsScene):
         elipse.setFlag(QGraphicsItem.ItemIsSelectable, True)
         elipse.setFlag(QGraphicsItem.ItemIsMovable, True)
         elipse.setFlag(QGraphicsItem.ItemIsFocusable, True)
+        elipse.setFlag(QGraphicsItem.ItemSendsGeometryChanges, True)
         elipse.setAcceptHoverEvents(True)
         self.circles.append(elipse)
 
@@ -147,7 +148,7 @@ class MyWindow(QtWidgets.QWidget):
         self.load_excel.clicked.connect(lambda: self.read_excel())
         self.overlay.clicked.connect(lambda: self.overlaystart())
         self.export_2.clicked.connect(lambda: self.export_images())
-        self.export_again.clicked.connect(lambda: self.export_images(meta_only=True))
+        # self.export_again.clicked.connect(lambda: self.export_images(meta_only=True))
         self.current_image = None
 
         # threshold buttons
@@ -534,10 +535,10 @@ class Export(QObject):
         with open(self.output + os.sep + self.name + '_metadata.json', "w") as write_file:
             json.dump(jsondata, write_file)
 
-
     def wsifigure(self, higher_resolution=False, pathology=None):
         """
         TODO: need to link this better to the actual script - rather than the meta file before its created
+        todo: have removed button export_again for function later
         takes the metadata from the json
         makes a fig of the locations on the tissue array and saves it
         higher resolution = int start at 1 and move up to improve resolution - will slow code
