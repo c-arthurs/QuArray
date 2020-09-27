@@ -16,6 +16,12 @@ This screen is used to select between the following options -
 3. Run DAB analysis in the current window
 4. Overlay figure creator - this is currently not available
 
+5 and 6 are both used as a part of the DAB analysis process when butto 3 is selected
+5. "Save images" is used to select whether you would like to save the mask images during the DAB analysis. 
+This will slow the process slightly. 
+6. Viewer window - this displays a low resolution version of the tissue core that is currently being analysed. 
+It will then show the low resolution mask of the same image that had been applied. This is useful for spotting a 
+poor threshold selection whilst analysis is running
 <br>
 
 ## TMA image export window
