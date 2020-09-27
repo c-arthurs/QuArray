@@ -7,7 +7,7 @@ At the moment only the mac version is uploaded as I am waiting to deploy it on W
 Log any issues in the issues tab and I will try to address them as soon as possible. 
 Email me for a video of how the exporter works.
 <br><br>
-##TMApp main screen window
+## TMApp main screen window
 ![labels](docs/images/TMAPP_main_screen.png) <br>
 <br>
 This screen is used to select between the following options - 
@@ -17,8 +17,8 @@ This screen is used to select between the following options -
 4. Overlay figure creator - this is currently not available
 <br>
 <br>
-##TMA image export window
+## TMA image export window
 ![labels](docs/images/Cut_application_screen.png) <br>
 <br>
-##DAB stain threshold selection window
+## DAB stain threshold selection window
 ![labels](docs/images/Threshold_selector_screen.png) <br>
