@@ -17,8 +17,8 @@ This screen is used to select between the following options -
 4. Overlay figure creator - this is currently not available
 <br>
 <br>
-##TMA image export window<br>
+##TMA image export window
 ![labels](docs/images/Cut_application_screen.png) <br>
 <br>
-##DAB stain threshold selection window<br>
+##DAB stain threshold selection window
 ![labels](docs/images/Threshold_selector_screen.png) <br>
