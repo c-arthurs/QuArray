@@ -35,7 +35,12 @@ directory then it will be loaded automatically on the WSI load. if this has happ
 This can also be used to reload the excel map at any point if the map has been changed my the user. 
 3. Overlay manually selected cores. This is applied after a user selection has been applied in panel number 5. It can 
 also be used after the cores have been moved to update the window. 
-4. 
+4. Export cores - Only click when happy that the cores are in the right place. Will disable user input and export the 
+core png images to the WSI directory. 
+5. Display window - double click to add core - spacebar to remove last point. Can drag pre applied cores. 
+6. Excel layout - the recomended way to index cores is with the row names as the number and the column names as the 
+letter (A6 - col A row 6). If you want to reverse this (A6 - row A col 6) then uncheck the box when the window opens
+ 
 
 ## DAB stain threshold selection window
 ![labels](docs/images/Threshold_selector_screen.png) <br>
