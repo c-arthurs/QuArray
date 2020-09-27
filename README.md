@@ -11,16 +11,14 @@ Email me for a video of how the exporter works.
 ![labels](docs/images/TMAPP_main_screen.png) <br>
 <br>
 This screen is used to select between the following options - 
-1. Opens the [Whole slide image (WSI) exporter](#TMA_export)
-2. Opens the [Set threshold screen](#threshold_screen)
+1. Opens the [Whole slide image (WSI) exporter](#tma-image-export-window)
+2. Opens the [Set threshold screen](#dab-stain-threshold-selection-window)
 3. Run DAB analysis in the current window
 4. Overlay figure creator - this is currently not available
 <br>
 <br>
-<a name="TMA_export"></a> 
-## TMA image export window <br>
+##TMA image export window<br>
 ![labels](docs/images/Cut_application_screen.png) <br>
 <br>
-<a name="threshold_screen"></a> 
-## TMApp DAB stain threshold selection window <br>
+##DAB stain threshold selection window<br>
 ![labels](docs/images/Threshold_selector_screen.png) <br>
