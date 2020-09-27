@@ -15,8 +15,9 @@ This screen is used to select between the following options -
 2. Opens the [Set threshold screen](#dab-stain-threshold-selection-window)
 3. Run DAB analysis in the current window
 4. Overlay figure creator - this is currently not available
+
 <br>
-<br>
+
 ## TMA image export window
 ![labels](docs/images/Cut_application_screen.png) <br>
 <br>
