@@ -27,8 +27,8 @@ poor threshold selection whilst analysis is running
 ## TMA image export window
 ![labels](docs/images/Cut_application_screen.png) <br>
 <br>
-This window is for exporting png images from whole slide images using a map of the array that is provided by the user - 
-see [array map example](#array-map-example)
+**This window is for exporting png images from whole slide images using a map of the array that is provided by the user - 
+see [array map example](#array-map-example)**
 1. Load WSI - prompts a dialog box for the user to select a ndpi or svs file
 2. Load Excel - this is a prompt to load the excel map - if the excel is named the same as the array and in the same 
 directory then it will be loaded automatically on the WSI load. if this has happened then the button will turn green. 
@@ -63,7 +63,7 @@ contains a map indexed with N and T for normal and tumour, respectively. Please 
 ## DAB stain threshold selection window
 ![labels](docs/images/Threshold_selector_screen.png) <br>
 <br>
-This window is to help select a minimum saturation of the brown chromogen stain to measure. 
+**This window is to help select a minimum saturation of the brown chromogen stain to measure. **
 1. Mask for the whole image - white pixels will be measured as stain. Low resolution. 
 2. Origional whole image at a low resolution
 3. Full resolution magnification mask
