@@ -38,11 +38,44 @@ also be used after the cores have been moved to update the window.
 4. Export cores - Only click when happy that the cores are in the right place. Will disable user input and export the 
 core png images to the WSI directory. 
 5. Display window - double click to add core - spacebar to remove last point. Can drag pre applied cores. 
-6. Excel layout - the recomended way to index cores is with the row names as the number and the column names as the 
+6. Excel layout - the recommended way to index cores is with the row names as the number and the column names as the 
 letter (A6 - col A row 6). If you want to reverse this (A6 - row A col 6) then uncheck the box when the window opens
- 
+7. Save overlay image - whether or not to automatically save the image in the viewer (5)
+8. Tab viewer window - further explained in points 11-18
+9. Image metadata for thw WSI file
+10. Progress update panel. Any updates will apear here
+11. Core diameter. This is currently set to 6000 pixels - similar bounding box size as a 1mm diameter tissue core. 
+This value can be chosen before image export and you can see what the new selection looks like by selecting the overlay 
+cores button (3). 
+12. Thresholding options. Choose the best threshold then proceed to 13
+13. Gausian blur. This is the sigma value applied to the gausian. must be applied after 12
+14. Closing. After 13 apply some binary morphological closing. higher slider values will lead to a more closed mask. 
+15. Removal of small objects from the mask. This is the value of the minimum size to be removed. if you have very small 
+cores then this will need to be reduced. 
+16. This applies the changes added in steps 12-15 and overlays the core images and labels.
+17. These are the settings for the first figure that is exported. This option will add a bounding box to the figure
+to denote the pathology of the core - red or green. This will only work if the first tab of the xlsx file with the array 
+contains a map indexed with N and T for normal and tumour, respectively. Please see the 
+[array map example](#array-map-example) for more details in indexing pathology. 
+18. if you increase this number then it will increase the level that the images are taken from in the WSI. Increasing
+ it will exponentially slow the program down so use sparingly. 
 
 ## DAB stain threshold selection window
 ![labels](docs/images/Threshold_selector_screen.png) <br>
+<br>
+This window is to help select a minimum saturation of the brown chromogen stain to measure. 
+1. Mask for the whole image - white pixels will be measured as stain. Low resolution. 
+2. Origional whole image at a low resolution
+3. Full resolution magnification mask
+4. Full resolution magnification image
+5. Add a file path. This is used to select the directory containing the PNG images that will be used to optimise the
+threshold. A random image from this file will be loaded into the window. 
+6. Load sample image. This will load a new random image into the window. It is good to optimise the thresholds on
+at least 10 images
+7. Saturation slider. This will change the minimum saturation value for the DAB stain. The value will be displayed in 
+windows 1 and 3. 
+8. toggle button. shows the origonal image again - now depreciated. 
+9. Apply thresholds. This sends the new threshold to the main window of the program. This should be selected before 
+pressing the DAB analysis button in the main window. The thresholds button will turn green. 
 
 ## Array Map Example
