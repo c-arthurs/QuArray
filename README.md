@@ -80,3 +80,15 @@ windows 1 and 3.
 pressing the DAB analysis button in the main window. The thresholds button will turn green. 
 
 ## Array Map Example
+![labels](docs/images/Pathology_maps.png) <br>
+<br>
+**Example of a xlsx file that can be used to tell the shape and missing cores of an array**
+<br>
+Left - Image of the first tab. 
+Right - Image of the second tab. 
+<br>
+The first tab contains 1 where a core is present and 0 where there is no core. There should be nothing in the rest 
+of the document 
+<br>
+The second tab contains pathology info and is used to make a figure if needed. This is not necesarry to run the 
+program. T and N stand for Tumour and Normal respectively.
