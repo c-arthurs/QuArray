@@ -61,9 +61,10 @@ contains a map indexed with N and T for normal and tumour, respectively. Please 
  it will exponentially slow the program down so use sparingly. 
 
 ## DAB stain threshold selection window
-![labels](docs/images/Threshold_selector_screen.png) <br>
+![labels](docs/images/Threshold_selector_screen.png)<br>
 <br>
-**This window is to help select a minimum saturation of the brown chromogen stain to measure. **
+**This window is to help select a minimum saturation of the brown chromogen stain to measure**
+
 1. Mask for the whole image - white pixels will be measured as stain. Low resolution. 
 2. Origional whole image at a low resolution
 3. Full resolution magnification mask
