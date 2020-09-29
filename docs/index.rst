@@ -1,10 +1,14 @@
-.. TMApp documentation master file, created by
-   sphinx-quickstart on Mon Sep 28 22:20:12 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. only:: not i18n
 
-TMApp Documentation!
-====================
+  .. note::
+     This documentation is written to support the TMApp application that was developed for TMA analysis.
+     Download the `latest stable binary <https://github.com/c-arthurs/TMAPP/releases>`_ or read the
+     :ref:`installation page <installation_page>`.
+
+Welcome to the official documentation of TMApp.
+
+TMApp Documentation
+===================
 
 .. toctree::
    :maxdepth: 3
@@ -14,14 +18,20 @@ TMApp Documentation!
    TA export
    DAB stain analysis
 
+Before you start
+================
 
-   :caption: Contents:
+This program is optimised to to run on most up to date MacOS, Linux, and Windows operating systems.
 
+If there are any problems getting it working then please submit a issue through GitHub.
+We would love to receive any pull requests for new features and bug fixes.
 
+Quick start guide
+================
 
-Indices and tables
-==================
+#. Download the `latest stable binary <https://github.com/c-arthurs/TMAPP/releases>`_
+#. Run the program and either:
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   * :ref:`Export tissue cores <Export_page>` from a TMA
+
+   * :ref:`Analyse DAB expression <DAB_page>` in the exported images
