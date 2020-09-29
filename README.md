@@ -1,4 +1,4 @@
-# TMAPP
+# QuArray
 The App for the TMA histology cutter and analyser
 
 The latest release is out! click on releases on the right hand side of the page and download the zip file. 
@@ -7,7 +7,7 @@ At the moment only the mac version is uploaded as I am waiting to deploy it on W
 Log any issues in the issues tab and I will try to address them as soon as possible. 
 Email me for a video of how the exporter works.
 <br><br>
-## TMApp main screen window
+## QuArray main screen window
 ![labels](docs/images/TMAPP_main_screen.png) <br>
 <br>
 This screen is used to select between the following options - 

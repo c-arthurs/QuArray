@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'TMApp'
+project = 'QuArray'
 copyright = '2020, Callum Arthurs'
 author = 'Callum Arthurs'
 

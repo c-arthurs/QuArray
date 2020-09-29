@@ -4,7 +4,7 @@
 DAB stain analysis
 ******************
 
-TMApp provides the option to andlyse DAB staining in your exported TMA images.
+QuArray provides the option to analyse DAB staining in your exported TMA images.
 
 .. raw:: html
 

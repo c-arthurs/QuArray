@@ -1,13 +1,13 @@
 .. only:: not i18n
 
   .. note::
-     This documentation is written to support the TMApp application that was developed for TMA analysis.
-     Download the `latest stable binary <https://github.com/c-arthurs/TMAPP/releases>`_ or read the
+     This documentation is written to support the QuArray application that was developed for TMA analysis.
+     Download the `latest stable binary <https://github.com/c-arthurs/QuArray/releases>`_ or read the
      :ref:`installation page <installation_page>`.
 
-Welcome to the official documentation of TMApp.
+Welcome to the official documentation of QuArray.
 
-TMApp Documentation
+QuArray Documentation
 ===================
 
 .. toctree::
@@ -29,7 +29,7 @@ We would love to receive any pull requests for new features and bug fixes.
 Quick start guide
 ================
 
-#. Download the `latest stable binary <https://github.com/c-arthurs/TMAPP/releases>`_
+#. Download the `latest stable binary <https://github.com/c-arthurs/QuArray/releases>`_
 #. Run the program and either:
 
    * :ref:`Export tissue cores <Export_page>` from a TMA
