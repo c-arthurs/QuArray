@@ -1,32 +1,21 @@
-from PyQt5 import uic
-from PyQt5.QtCore import *
-from PyQt5 import QtCore
-from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtWidgets import QGraphicsScene, QGraphicsItem
+from PyQt5.uic import loadUi
+from PyQt5.QtCore import Qt, QRectF, QThread, QObject, pyqtSignal, pyqtSlot
+from PyQt5.QtGui import QColor, QFont, QImage, QPainter, QPixmap, QPen, QBrush
+from PyQt5.QtWidgets import QGraphicsScene, QGraphicsItem, QFileDialog, QWidget, QGraphicsPixmapItem
 from openslide import OpenSlide
 import qimage2ndarray
-from PyQt5.QtGui import QPen, QBrush
 import numpy as np
 import os
 from openpyxl import load_workbook
 from openpyxl.utils.cell import coordinate_from_string, column_index_from_string
-
 import json
 import sys
-from PyQt5.QtWidgets import QFileDialog
-from PyQt5.QtCore import QThread, QObject, pyqtSignal, pyqtSlot
-
 from skimage.filters import threshold_otsu, threshold_li, threshold_mean, threshold_triangle, gaussian
 from skimage.color import rgb2gray
 from skimage.morphology import closing, square, remove_small_objects, label
 from skimage.measure import regionprops
 from skimage.transform import resize
 from PIL import Image
-
-"""
-TODO - the current image method is currently not working well - the better way is to just save the methods that 
-have been applied and then reapply them when the image is needed - for the remove small objects phase
-"""
 
 sys._MEIPASS = '.'  # for running locally
 
@@ -47,9 +36,9 @@ class GraphicsScene(QGraphicsScene):
         self.rectsandtext = []
 
     def elipse_adder(self, x, y):
-        pen = QPen(QtGui.QColor(69, 130, 201, 200))  # QColor(128, 128, 255, 128)
+        pen = QPen(QColor(69, 130, 201, 200))  # QColor(128, 128, 255, 128)
         pen.setWidthF(10)  # border width
-        brush = QBrush(QtCore.Qt.transparent)
+        brush = QBrush(Qt.transparent)
         elipse = self.addEllipse(x - 25, y - 25, 50, 50, pen, brush)
         elipse.setAcceptDrops(True)
         elipse.setCursor(Qt.OpenHandCursor)
@@ -93,9 +82,9 @@ class GraphicsScene(QGraphicsScene):
         if len(self.rectsandtext) >= 1:
             [i.setVisible(False) for i in self.rectsandtext]
             self.rectsandtext = []
-        pen = QPen(QtGui.QColor(69, 130, 201, 240))
+        pen = QPen(QColor(69, 130, 201, 240))
         pen.setWidthF(6)  # border width
-        brush = QBrush(QtGui.QColor(215, 230, 248, 160))  # square fill
+        brush = QBrush(QColor(215, 230, 248, 160))  # square fill
         if autopilot:
             self.centroid = self.coords
             self.centroid = self.sortCentroid(self.centroid)
@@ -105,7 +94,6 @@ class GraphicsScene(QGraphicsScene):
             self.centroid = [(y, x) for (x, y) in self.coords]
             self.centroid = [(self.centroid[i][0]+self.circles[i].scenePos().y(), self.centroid[i][1]+self.circles[i].scenePos().x()) for i in range(len(self.circles))]
             print(self.centroid, "centroid")
-        print("len - ", len(self.coords))
         diameter = core_diameter / scale_index
         a = 0
         for y, x in self.centroid:
@@ -115,8 +103,8 @@ class GraphicsScene(QGraphicsScene):
                 self.rectsandtext.append(rect)
                 self.rectsandtext.append(text)
                 text.setPos(x, y)
-                text.setDefaultTextColor(QtGui.QColor(35, 57, 82, 200))
-                font = QtGui.QFont()
+                text.setDefaultTextColor(QColor(35, 57, 82, 200))
+                font = QFont()
                 font.setPointSize(80)
                 text.setFont(font)
                 a = a + 1
@@ -128,20 +116,19 @@ class GraphicsScene(QGraphicsScene):
     def save(self, output, name):
         # Get region of scene to capture from somewhere.
         area = self.sceneRect().size().toSize()
-        image = QtGui.QImage(area, QtGui.QImage.Format_RGB888)
-        painter = QtGui.QPainter(image)
+        image = QImage(area, QImage.Format_RGB888)
+        painter = QPainter(image)
         self.render(painter, target=QRectF(image.rect()), source=self.sceneRect())
         painter.end()
         image.save(output + os.sep + name + "_overlay" + ".tiff")
 
 
-class MyWindow(QtWidgets.QWidget):
+class MyWindow(QWidget):
     def __init__(self):
         super(MyWindow, self).__init__()
-        uic.loadUi(sys._MEIPASS + os.sep + "scripts" + os.sep + "Cut_Application_thread_layout.ui", self)  # deployment
-
+        loadUi(sys._MEIPASS + os.sep + "scripts" + os.sep + "Cut_Application_thread_layout.ui", self)  # deployment
+        self.setWindowTitle('QuArray')
         self.tabWidget.setStyleSheet("QTabWidget::pane {margin: 0px,0px,0px,0px; padding: 0px}")
-
         self.excel_layout = self.excel_btn.isChecked()
         self.excel_btn.toggled.connect(self.excel)
         self.load_ndpi.clicked.connect(lambda: self.loadndpi())
@@ -150,11 +137,9 @@ class MyWindow(QtWidgets.QWidget):
         self.export_2.clicked.connect(lambda: self.export_images())
         # self.export_again.clicked.connect(lambda: self.export_images(meta_only=True))
         self.current_image = None
-
         # threshold buttons
         self.gausianval = 0
         self.thresholdval = None
-
         self.otsu.clicked.connect(lambda: [self.threshold("otsu"), self.reset_sliders()])
         self.threshmean.clicked.connect(lambda: [self.threshold("mean"), self.reset_sliders()])
         self.threshtriangle.clicked.connect(lambda: [self.threshold("triangle"), self.reset_sliders()])
@@ -173,7 +158,6 @@ class MyWindow(QtWidgets.QWidget):
                                  "manual_overlay": False}
         self.pathology = None
         self.excelpath = False
-
         self.init_scene()
         self.show()
 
@@ -209,7 +193,7 @@ class MyWindow(QtWidgets.QWidget):
     def init_scene(self):
         self.scene = GraphicsScene(self)
         self.graphicsView.setScene(self.scene)
-        self.pixmap = QtWidgets.QGraphicsPixmapItem()
+        self.pixmap = QGraphicsPixmapItem()
         self.scene.addItem(self.pixmap)
 
     def show_info(self, text):
@@ -222,7 +206,7 @@ class MyWindow(QtWidgets.QWidget):
     def loadndpi(self):
         self.init_scene()
         self.path, _ = QFileDialog.getOpenFileName(parent=self, caption='Open file',
-                                                   directory="/Users/callum/Desktop/", filter='*.ndpi;;*.svs', )
+                                                   directory="/Users/callum/Desktop/", filter='*.ndpi;*.svs')
         if self.path:
             self.output = os.path.splitext(self.path)[0] + '_split'
             if not os.path.exists(self.output):  # make output directory
@@ -280,8 +264,6 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         self.lvl = np.where(width == self.find_nearest(width, self.overview_level_width))[0][0]
         self.overlayLevelLineEdit.setText(str(self.lvl))
         self.scale_index = self.width_height[0][0] / self.width_height[self.lvl][0]
-        print(f"nearest found at - {self.find_nearest(width, self.overview_level_width)}"
-              f" corresponding to level {self.lvl}")
         self.overview = np.array(self.image.read_region(location=(0, 0), level=self.lvl,
                                                         size=self.width_height[self.lvl]))
         self.showimage(image=self.overview)
@@ -295,9 +277,9 @@ level_downsamples = {str(self.image.level_downsamples)}""")
     def showimage(self, image):
         self.current_image = image
         img = qimage2ndarray.array2qimage(image, normalize=True)
-        img = QtGui.QPixmap(img)
+        img = QPixmap(img)
         self.pixmap.setPixmap(img)
-        self.graphicsView.fitInView(self.graphicsView.sceneRect(), QtCore.Qt.KeepAspectRatio)
+        self.graphicsView.fitInView(self.graphicsView.sceneRect(), Qt.KeepAspectRatio)
 
     def reset_sliders(self):
         self.gausslider.setValue(0)
@@ -372,9 +354,6 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         self.showimage(labeled_image)
         labels = regionprops(labeled_image)
         centroid = [r.centroid for r in labels]
-        print("centroid length - ", len(centroid))
-        area = [r.area for r in labels]
-        bbox = [r.bbox for r in labels]
         self.overlaystart(autopilot=True, coords=centroid)
         self.current_augments['overlay_applied'] = True
 
@@ -382,11 +361,8 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         if not self.excelpath:
             self.excelpath, _ = QFileDialog.getOpenFileName(parent=self, caption='Open file',
                                                             directory="/Users/callum/Desktop", filter='*.xlsx')
-        self.activate(
-            [self.numberOfCoresLabel, self.numberOfCoresLineEdit, self.diameterLabel, self.diamiterLineEdit,
-             self.overlay, self.progressBar, self.excel_btn, self.overlaySave, self.tabWidget])
-        # else:
-        #     self.excelpath = os.path.splitext(self.path)[0] + '.xlsx'
+        self.activate([self.numberOfCoresLabel, self.numberOfCoresLineEdit, self.diameterLabel, self.diamiterLineEdit,
+                       self.overlay, self.progressBar, self.excel_btn, self.overlaySave, self.tabWidget])
         if self.excelpath:
             self.load_excel.setStyleSheet("background-color: rgb(0,90,0)")
             excelname = self.excelpath
@@ -470,15 +446,13 @@ level_downsamples = {str(self.image.level_downsamples)}""")
                        self.export_2, self.overlay, self.excel_btn, self.load_ndpi, self.load_excel, self.overlaySave],
                       action=True)
 
-        # TODO Activate stuff
-
 
 class Export(QObject):
     info = pyqtSignal(str)
     countChanged = pyqtSignal(int)
     figures = pyqtSignal()
     done = pyqtSignal(bool)
-    writemeta = pyqtSignal(bool)  # TODO - link this to write the metadata for the image export
+    writemeta = pyqtSignal(bool)
 
     def __init__(self, image, centroid, cores, scale_index, core_diameter, output, name, lvl, path, arrayshape,
                  pathology, resolution, meta_only=False):
@@ -504,11 +478,10 @@ class Export(QObject):
             self.wsifigure(higher_resolution=False, pathology=self.pathology)
         else:
             self.export_images(self.centroid, self.cores)
-        print('exporting')
 
     def export_images(self, centroid, cores):
         infostr = []
-        self.scaledcent = [(y * self.scale_index, x * self.scale_index) for (x, y) in centroid]  # rotate xy for openslide
+        self.scaledcent = [(y * self.scale_index, x * self.scale_index) for (x, y) in centroid]  # rotate xy openslide
         self.scaledcent = [(int(x - (self.core_diameter / 2)), int(y - (self.core_diameter / 2))) for (x, y) in self.scaledcent]
         self.json_write()
         self.wsifigure(higher_resolution=False, pathology=self.pathology)

@@ -1,15 +1,10 @@
-# Callum Arthurs
-
-import sys
 import numpy as np
 import os
 from natsort import natsorted
 import pandas as pd
-from skimage import filters
-from skimage import color
-from skimage.filters import gaussian
-from PyQt5.QtCore import *
-from PyQt5.QtCore import QThread
+from skimage.color import rgb2hsv, rgb2gray
+from skimage.filters import gaussian, threshold_triangle
+from PyQt5.QtCore import QThread, pyqtSignal
 from PIL import Image
 
 
@@ -60,7 +55,7 @@ class DabAnalysis(QThread):
         self.activate.emit(True)
 
     def QuantStain(self, image, filename, save=False):
-        img_hsv = color.rgb2hsv(image)
+        img_hsv = rgb2hsv(image)
         img_hue = img_hsv[:, :, 0]
         image_sat = img_hsv[:, :, 1]
         hue = np.logical_and(img_hue > 0.02, img_hue < 0.10)  # BROWN PIXELS BETWEEN 0.02 and 0.10
@@ -88,8 +83,8 @@ class DabAnalysis(QThread):
         return stained, stint_mean, stint_std
 
     def QuantCore(self, image, filename, save=False):
-        image = gaussian(color.rgb2gray(image), sigma=2)
-        thresh = filters.threshold_triangle(image[image > 0])
+        image = gaussian(rgb2gray(image), sigma=2)
+        thresh = threshold_triangle(image[image > 0])
         binary = np.logical_and(image < thresh, image > 0)
         wholeCore = np.sum(binary)
         if save:
