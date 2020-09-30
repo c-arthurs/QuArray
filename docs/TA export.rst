@@ -14,9 +14,9 @@ see :ref:`array map example <Input_page>`
 
 #. Load WSI prompts a dialog box for the user to select a ndpi or svs file.
 
-#. Load Excel this is a prompt to load the excel map.
+#. Load Excel this is a prompt to load the :ref:`excel map <Input_page>`.
 
-   * if the excel is named the same as the array and in the same directory then it will be loaded automatically on the WSI load.
+   * If the excel is named the same as the array and in the same directory then it will be loaded automatically on the WSI load.
 
    * If this has happened then the button will turn green.
 
@@ -83,3 +83,21 @@ letter (A6 col A row 6) If you want to reverse this (A6 row A col 6) then unchec
 #. If you increase this number then it will increase the level that the images are taken from in the WSI.
 
    * Increasing this will exponentially slow the program down so use sparingly.
+
+Example tissue array export workflow 1 - Auto thresholding
+##########################################################
+
+.. raw:: html
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto; margin-bottom: 2em;">
+        <iframe src="https://www.youtube.com/embed/Mu3BfD6wmPg" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+    </div>
+
+Example tissue array export workflow 2 - Manual selection
+#########################################################
+
+.. raw:: html
+
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto; margin-bottom: 2em;">
+        <iframe src="https://www.youtube.com/embed/Mu3BfD6wmPg" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+    </div>
