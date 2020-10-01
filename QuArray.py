@@ -1,7 +1,7 @@
 # DEPLOY MAC
-# sudo pyinstaller -F --windowed -p /Users/callum/callum/QuArray/scripts --add-data "/Users/callum/callum/QuArray/scripts:scripts" --add-binary "/Users/callum/Library/Application Support/pyinstaller/bincache00_py37_64bit/libopenslide.0.dylib:." --icon=scripts/docs/he.icns QuArray.py
+# sudo pyinstaller -F --windowed -p /Users/callum/callum/QuArray/scripts --add-data "/Users/callum/callum/QuArray/scripts:scripts" --add-binary "/Users/callum/Library/Application Support/pyinstaller/bincache00_py37_64bit/libopenslide.0.dylib:." --icon=scripts/icons/icon.icns QuArray.py
 # Windows
-# pyinstaller -F --windowed -p C:/Users/Daniel/Downloads/TMAPP-master/TMAPP-master/scripts --add-data "C:/Users/Daniel/Downloads/TMAPP-master/TMAPP-master/scripts;scripts" --icon=scripts/docs/he.ico DAB_application.py
+# pyinstaller -F --windowed -p C:/Users/Daniel/Downloads/TMAPP-master/TMAPP-master/scripts --add-data "C:/Users/Daniel/Downloads/TMAPP-master/TMAPP-master/scripts;scripts" --icon=scripts/icons/icon.ico DAB_application.py
 
 import qdarkgraystyle
 from scripts import DABanalysis, Overlay, Cut_Application_thread
