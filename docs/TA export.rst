@@ -12,7 +12,7 @@ Tissue export window
 This window is for exporting png images from whole slide images using a map of the array that is provided by the user -
 see :ref:`array map example <Input_page>`
 
-#. Load WSI prompts a dialog box for the user to select a ndpi or svs file.
+#. Load WSI prompts a dialog box for the user to select a NDPI or SVS file.
 
 #. Load Excel this is a prompt to load the :ref:`excel map <Input_page>`.
 
@@ -60,7 +60,7 @@ letter (A6 col A row 6) If you want to reverse this (A6 row A col 6) then unchec
 
    * Choose the best threshold then proceed to 13
 
-#. Gausian blur shows the sigma value applied to the gausian and it must be applied after 12.
+#. Gaussian blur shows the sigma value applied to the gausian and it must be applied after 12.
 
 #. Closing should be applied after 13 and stands for binary morphological closing.
 

@@ -8,7 +8,7 @@
 Welcome to the official documentation of QuArray.
 
 QuArray Documentation
-===================
+=====================
 
 .. toctree::
    :maxdepth: 3
@@ -19,6 +19,7 @@ QuArray Documentation
    DAB stain analysis
    Output files
    Measurements
+   Acknowledgements
 
 Before you start
 ================
@@ -29,7 +30,7 @@ If there are any problems getting it working then please submit a issue through 
 We would love to receive any pull requests for new features and bug fixes.
 
 Quick start guide
-================
+=================
 
 #. Download the `latest stable binary <https://github.com/c-arthurs/QuArray/releases>`_
 #. Run the program and either:
