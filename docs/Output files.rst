@@ -62,3 +62,24 @@ The column titles and data are as follows:
 :Mean_Intensity_perAMTT: The Mean_intensity divided by the amount of tissue
 :SD_Intensity_perAMTT: The Standard_Dev_intensity divided by the amount of tissue
 
+Output file structure
+=====================
+
+Below is an example of what the file structure could look like for an end to end project after running image export and
+chromogen analysis
+
+.. code-block::
+
+   .
+   ├── wsi_001.ndpi
+   ├── wsi_001.xlsx
+   └── wsi_001_split
+       ├── CoreAnalysis_WSI_001.xlsx
+       ├── wsi_001_split_A1.png
+       ├── wsi_001_split_B1.png
+       ├── wsi_001_split_C1.png
+       ├── wsi_001_split_D1.png
+       ├── wsi_001_split_layoutfig.tiff
+       ├── wsi_001_split_metadata.json
+       └── wsi_001_split_overlay.tiff
+

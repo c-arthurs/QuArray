@@ -1,8 +1,8 @@
 .. _Export_page:
 
-*********
-TA export
-*********
+************************
+Whole Slide Image export
+************************
 
 Tissue export window
 ====================
@@ -84,8 +84,8 @@ letter (A6 col A row 6) If you want to reverse this (A6 row A col 6) then unchec
 
    * Increasing this will exponentially slow the program down so use sparingly.
 
-Example tissue array export workflow 1 - Auto thresholding
-##########################################################
+Example tissue array export workflow 1 - Auto threshold
+#######################################################
 
 .. raw:: html
 

@@ -7,12 +7,17 @@ Input files
 Whole Slide Image files
 =======================
 
-.ndpi (Hamamatsu) and .svs (Leica) files are accepted by the program as whole slide image files.
+Supported Formats
+-----------------
+
+NDPI (Hamamatsu) and SVS (Leica) files are accepted by the program as whole slide image files.
 
 Tissue array map file
 =====================
 
-An xlsx file which acts as a map of the array and a way to provide pathology information.
+An xlsx file which acts as a map of the array.
+
+This is also a method of providing indexed information.
 
 File locations
 ==============
@@ -20,11 +25,15 @@ File locations
 If the WSI file and the tissue array map file are saved in the same directory with the same name
 then the array map will be loaded automatically when the WSI file is loaded.
 
+Here is an example of a normal tree file structure containing the WSI file and the index file.
+
 .. code-block:: bash
 
    .
    ├── WSI.ndpi
    └── WSI.xlsx
+
+When the images are exported a new directory will be created inside the root to host the output files.
 
 User interface
 ==============
