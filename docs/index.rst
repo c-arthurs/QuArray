@@ -17,6 +17,8 @@ QuArray Documentation
    Input files
    TA export
    DAB stain analysis
+   Output files
+   Measurements
 
 Before you start
 ================

@@ -26,7 +26,8 @@ Selecting a threshold
 
 To view the threshold selector window select the threshold button from the main window. A new window will appear.
 
-There is an option to select the file path of the PNG files that you are loooking to analyse.
+There is an option to select the file path of the PNG files that you are loooking to analyse. See
+:ref:`measurements page <Measurements_page>`.
 
 User interface
 ##############
