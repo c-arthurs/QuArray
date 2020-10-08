@@ -18,7 +18,10 @@ import numpy as np
 from skimage.color import rgb2hsv
 from PIL import Image
 
-sys._MEIPASS = '.'  # for running locally
+
+if not hasattr(sys, "_MEIPASS"):
+    sys._MEIPASS = '.'  # for running locally
+
 
 
 class MyWindow(QMainWindow):
@@ -225,7 +228,6 @@ class ThresholdSelectorWindow(QtWidgets.QWidget):
             return
 
     def resizeEvent(self, event):
-        # QMainWindow.resizeEvent(self, event)
         self.graphicsView.fitInView(self.graphicsView.sceneRect(), Qt.KeepAspectRatio)
         self.graphicsView_2.fitInView(self.graphicsView_2.sceneRect(), Qt.KeepAspectRatio)
         self.graphicsView_zoom1.fitInView(self.graphicsView_zoom1.sceneRect(), Qt.KeepAspectRatio)

@@ -17,8 +17,8 @@ from skimage.measure import regionprops
 from skimage.transform import resize
 from PIL import Image
 
-sys._MEIPASS = '.'  # for running locally
-
+if not hasattr(sys, "_MEIPASS"):
+    sys._MEIPASS = '.'  # for running locally
 
 # setup the Graphics scene to detect clicks
 class GraphicsScene(QGraphicsScene):
