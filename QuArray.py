@@ -225,7 +225,7 @@ class ThresholdSelectorWindow(QtWidgets.QWidget):
             return
 
     def resizeEvent(self, event):
-        QMainWindow.resizeEvent(self, event)
+        # QMainWindow.resizeEvent(self, event)
         self.graphicsView.fitInView(self.graphicsView.sceneRect(), Qt.KeepAspectRatio)
         self.graphicsView_2.fitInView(self.graphicsView_2.sceneRect(), Qt.KeepAspectRatio)
         self.graphicsView_zoom1.fitInView(self.graphicsView_zoom1.sceneRect(), Qt.KeepAspectRatio)
