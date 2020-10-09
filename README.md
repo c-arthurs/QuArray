@@ -1,6 +1,6 @@
 # QuArray
 The App for the export and analysis of Tissue Array (TA) histology whole slide images (WSI). <br>
-Read the docs - https://quarray.readthedocs.io/en/latest/index.html# 
+Read the docs - https://quarray.readthedocs.io
 
 The latest release is out! click on releases on the right hand side of the page and download the zip file. 
 There are currently versions available for MacOS(>Catalina 10.15.6), Linux (Ubuntu>20.04), and Windows10. 
