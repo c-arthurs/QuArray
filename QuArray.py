@@ -3,7 +3,7 @@
 # Windows
 # pyinstaller -F --windowed -p C:/Users/aalab/Documents/callum/QuArray/scripts --add-data "C:/Users/aalab/Documents/callum/QuArray/scripts;scripts" --icon=scripts/icons/icon.ico QuArray.py
 # Linux
-# pyinstaller -F -p ~/Documents/QuArray/scripts/ --add-data "scripts:scripts" --icon=scripts/icons/icon.png QuArray.py
+# pyinstaller -F -p ~/Documents/QuArray/scripts/ --add-data "scripts:scripts" QuArray.py
 
 import qdarkgraystyle
 from scripts import DABanalysis, Overlay, Cut_Application_thread
