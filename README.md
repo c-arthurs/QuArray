@@ -1,11 +1,12 @@
 # QuArray
-The App for the TMA histology cutter and analyser
+The App for the export and analysis of Tissue Array (TA) histology whole slide images (WSI). <br>
+Read the docs - https://quarray.readthedocs.io
 
 The latest release is out! click on releases on the right hand side of the page and download the zip file. 
-At the moment only the mac version is uploaded as I am waiting to deploy it on Windows and Linux. 
+There are currently versions available for MacOS(>Catalina 10.15.6), Linux (Ubuntu>20.04), and Windows10. 
 
 Log any issues in the issues tab and I will try to address them as soon as possible. 
-Email me for a video of how the exporter works.
+See the docs for full videos of how the application can work.
 <br><br>
 ## QuArray main screen window
 ![labels](docs/images/TMAPP_main_screen.png) <br>
