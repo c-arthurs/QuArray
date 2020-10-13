@@ -4,7 +4,10 @@
 DAB stain analysis
 ******************
 
-QuArray provides the option to analyse DAB staining in your exported TMA images.
+QuArray provides the option to analyse DAB staining in exported TA images. Below is a video detailing the workflow to be
+applied to images that have been exported from the :ref:`TA export window <Export_page>`.
+There is a detailed breakdown of each window and button :ref:`below <_threshold_selector_window>`
+
 
 .. raw:: html
 
@@ -16,21 +19,19 @@ QuArray provides the option to analyse DAB staining in your exported TMA images.
 Input
 #####
 
-The user must have selected a threshold using the :ref:`threshold selector window <threshold_selector_window>`
-. It will run analysis on any PNG file in a given directory.
+The user selects a threshold using the :ref:`threshold selector window <threshold_selector_window>`
+. The analysis is then applied to any PNG file in a given directory.
 
 .. _threshold_selector_window:
 
-Selecting a threshold
-#####################
+Selecting a threshold window
+############################
 
-To view the threshold selector window select the threshold button from the main window. A new window will appear.
+To view the *threshold selector window* select the threshold button from the main window. The window shown below should
+appear.
 
-There is an option to select the file path of the PNG files that you are loooking to analyse. See
+There is also an option to select the file path of the PNG files. Please see
 :ref:`measurements page <Measurements_page>`.
-
-User interface
-##############
 
 .. image:: images/Threshold_selector_screen.png
 
@@ -38,7 +39,7 @@ User interface
 
    * White pixels will be measured as stain.
 
-   * This is a Low resolution version of the WSI.
+   * This is a low-resolution version of the WSI.
 
 #. Original whole image at a low resolution
 

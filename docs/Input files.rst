@@ -12,18 +12,26 @@ Supported Formats
 
 NDPI (Hamamatsu) and SVS (Leica) files are accepted by the program as whole slide image files.
 
+An example image of a WSI *.ndpi file with tissue cores stained with DAB is given below:
+
+.. image:: images/example_ndpi.png
+
+Each core in this example is 1mm in diameter (the core diameter or number of cores is not a limitation for QuArray application). Scale bar is 1mm.
+
 Tissue array map file
 =====================
 
-An xlsx file which acts as a map of the array.
+A spreadsheet (Excel*.xlsx) file acts as a map of the array.
 
-This is also a method of providing indexed information.
+The spreadsheet can also contain indexed information that is used for downstream analysis such as sample ID,
+sample details (e.g. date of sample collection, type) and categories (e.g. normal or diseased).
 
 File locations
 ==============
 
 If the WSI file and the tissue array map file are saved in the same directory with the same name
-then the array map will be loaded automatically when the WSI file is loaded.
+then the array map will be loaded automatically when the WSI file is loaded. Otherwise, the user load the map file
+separately.
 
 Here is an example of a normal tree file structure containing the WSI file and the index file.
 
@@ -33,7 +41,7 @@ Here is an example of a normal tree file structure containing the WSI file and t
    ├── WSI.ndpi
    └── WSI.xlsx
 
-When the images are exported a new directory will be created inside the root to host the output files.
+When the images are exported a new directory will be created inside the root to host output files.
 
 User interface
 ==============

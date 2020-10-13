@@ -8,14 +8,12 @@ Installation
 Getting Started
 ###############
 
-The program requires no install to get started. It should work on either MacOS, Linux, or windows operating systems
-when the correct binary is downloaded.
+QuArray is a stand-alone, platform independent application (designed for Windows, Mac or Linux operating systems),
+and requires only a correct binary file to be downloaded. The binary is available from
+`GitHub <https://github.com/c-arthurs/QuArray>`_
 
-Simply download the binary from `GitHub <https://github.com/c-arthurs/QuArray>`_ and start the program -
-it will need you to authorise that it is from an unknown developer.
-
-The startup may take a while - as it was compiled with PyQt5 as a single file executable
-but should run well once the GUI initialises.
+The application may take a short while to start (as it is compiled with PyQt5 as a single executable file) however once
+the GUI is initialised the operation is quicker.
 
 Operating systems
 #################
@@ -41,7 +39,7 @@ Download the binary and make sure to make it executable by running -
 
    sudo chmod +x QuArray_ubuntu
 
-Or you can do this in the gui.
+Or you can do this in the Ubuntu desktop.
 
 
 

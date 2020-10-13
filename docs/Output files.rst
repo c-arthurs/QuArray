@@ -24,7 +24,7 @@ This will be created when overlay cores is pressed.
 2. Figure of all images in the array
 ------------------------------------
 
-An example of this figure is below. If pathology map is provided then the bounding boxes are coloured bases on
+An example of this figure is below. If pathology map is provided, then the bounding boxes are coloured bases on
 pathology. Otherwise, they are not included.
 
 .. Image:: images/wsi_001_split_layoutfig.tiff
