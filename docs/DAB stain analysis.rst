@@ -6,7 +6,7 @@ DAB stain analysis
 
 QuArray provides the option to analyse DAB staining in exported TA images. Below is a video detailing the workflow to be
 applied to images that have been exported from the :ref:`TA export window <Export_page>`.
-There is a detailed breakdown of each window and button :ref:`below <_threshold_selector_window>`
+There is a detailed breakdown of each window and button :ref:`below<threshold_selector_window>`.
 
 
 .. raw:: html

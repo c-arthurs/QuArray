@@ -12,7 +12,7 @@ Supported Formats
 
 NDPI (Hamamatsu) and SVS (Leica) files are accepted by the program as whole slide image files.
 
-An example image of a WSI *.ndpi file with tissue cores stained with DAB is given below:
+An example image of a WSI .ndpi file with tissue cores stained with DAB is given below:
 
 .. image:: images/example_ndpi.png
 
