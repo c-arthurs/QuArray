@@ -5,7 +5,7 @@ DAB stain analysis
 ******************
 
 QuArray provides the option to analyse DAB staining in exported TA images. Below is a video detailing the workflow to be
-applied to images that have been exported from the :ref:`TA export window <Export_page>`.
+applied to images that have been exported from the :ref:`TA export window<Export_page>`.
 There is a detailed breakdown of each window and button :ref:`below<threshold_selector_window>`.
 
 
@@ -19,7 +19,7 @@ There is a detailed breakdown of each window and button :ref:`below<threshold_se
 Input
 #####
 
-The user selects a threshold using the :ref:`threshold selector window <threshold_selector_window>`
+The user selects a threshold using the :ref:`threshold selector window<threshold_selector_window>`
 . The analysis is then applied to any PNG file in a given directory.
 
 .. _threshold_selector_window:
@@ -31,7 +31,7 @@ To view the *threshold selector window* select the threshold button from the mai
 appear.
 
 There is also an option to select the file path of the PNG files. Please see
-:ref:`measurements page <Measurements_page>`.
+:ref:`measurements page<Measurements_page>`.
 
 .. image:: images/Threshold_selector_screen.png
 

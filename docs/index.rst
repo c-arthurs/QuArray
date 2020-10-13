@@ -1,9 +1,10 @@
 .. only:: not i18n
 
   .. note::
-     This documentation is written to support the QuArray application that was developed for TMA analysis.
+     This documentation is written to support the QuArray application, developed in the Ahmed Lab for TA export
+     and analysis.
      Download the `latest stable binary <https://github.com/c-arthurs/QuArray/releases>`_ or read the
-     :ref:`installation page <installation_page>`.
+     :ref:`installation page <installation_page>` to get started.
 
 Welcome to the official documentation of QuArray.
 
@@ -35,6 +36,6 @@ Quick start guide
 #. Download the `latest stable binary <https://github.com/c-arthurs/QuArray/releases>`_
 #. Run the program and either:
 
-   * :ref:`Export tissue cores <Export_page>` from a TMA
+   * :ref:`Export tissue cores<Export_page>` from a TMA
 
-   * :ref:`Analyse DAB expression <DAB_page>` in the exported images
+   * :ref:`Analyse DAB expression<DAB_page>` in the exported images
