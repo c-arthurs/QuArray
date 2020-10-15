@@ -32,7 +32,7 @@ pathology. Otherwise, they are not included.
 3. Image metadata in JSON format
 --------------------------------
 
-The following fields are included
+The following fields are included.
 
 :path: path of the whole slide image
 :coordinates: list of tuple coordinates in the whole slide image
@@ -66,7 +66,7 @@ Output file structure
 =====================
 
 Below is an example of what the file structure could look like for an end to end project after running image export and
-chromogen analysis
+chromogen analysis.
 
 .. code-block:: bash
 

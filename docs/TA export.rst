@@ -13,7 +13,7 @@ Tissue export window
 .. image:: images/Cut_application_screen.png
 
 The tissue export window is for exporting png images from whole slide files using a map of the array that is provided by the user -
-see :ref:`array map example <Input_page>`
+see :ref:`array map example<Input_page>`.
 
 #. Load WSI prompts a dialog box for the user to select a NDPI or SVS file.
 
@@ -25,7 +25,7 @@ see :ref:`array map example <Input_page>`
 
    * This can also be used to reload the excel map at any point if the map has been changed by the user.
 
-#. Overlay of manually selected cores
+#. Overlay of manually selected cores.
 
    * This is applied after a user selection has been applied in panel number 5.
 
@@ -48,9 +48,9 @@ see :ref:`array map example <Input_page>`
 
 #. *Save overlay image* determines whether or not to automatically save the image in the viewer (5).
 
-#. *Tab viewer window* is further explained in points 11-18
+#. *Tab viewer window* is further explained in points 11-18.
 
-#. Image metadata for the WSI file
+#. Image metadata for the WSI file.
 
 #. *Progress update panel* is where progress updates will appear.
 
@@ -61,7 +61,7 @@ see :ref:`array map example <Input_page>`
 
 #. Thresholding options.
 
-   * Choose the best threshold then proceed to 13
+   * Choose the best threshold then proceed to 13.
 
 #. Gaussian blur shows the sigma value applied to the gausian and it must be applied after 12.
 
@@ -81,7 +81,7 @@ see :ref:`array map example <Input_page>`
 
    * This will only work if the first tab of the xlsx file with the array contains a map indexed with N and T for normal and tumour, respectively.
 
-   * Please see the :ref:`array map example <Input_page>` for more details in indexing pathology.
+   * Please see the :ref:`array map example<Input_page>` for more indexing pathology details.
 
 #. If you increase this number, then it will increase the level that the images are taken from in the WSI.
 

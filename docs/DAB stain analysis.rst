@@ -19,8 +19,8 @@ There is a detailed breakdown of each window and button :ref:`below<threshold_se
 Input
 #####
 
-The user selects a threshold using the :ref:`threshold selector window<threshold_selector_window>`
-. The analysis is then applied to any PNG file in a given directory.
+The user selects a threshold using the :ref:`threshold selector window<threshold_selector_window>`.
+The analysis is then applied to any PNG file in a given directory.
 
 .. _threshold_selector_window:
 
@@ -35,17 +35,17 @@ There is also an option to select the file path of the PNG files. Please see
 
 .. image:: images/Threshold_selector_screen.png
 
-#. Mask for the whole image
+#. Mask for the whole image.
 
    * White pixels will be measured as stain.
 
    * This is a low-resolution version of the WSI.
 
-#. Original whole image at a low resolution
+#. Original whole image at a low resolution.
 
-#. Full resolution magnification mask
+#. Full resolution magnification mask.
 
-#. Full resolution magnification image
+#. Full resolution magnification image.
 
 #. Add a file path.
 
@@ -57,7 +57,7 @@ There is also an option to select the file path of the PNG files. Please see
 
    * This will load a new random image into the window.
 
-   * It is good to optimise the thresholds on at least 10 sample images from the dataset
+   * It is good to optimise the thresholds on at least 10 sample images from the dataset.
 
 #. Saturation slider.
 

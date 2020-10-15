@@ -4,7 +4,7 @@
 Acknowledgements
 ****************
 
-This program is built on top of some truly amazing python packages that are listed in no particular order below
+This program is built on top of some truly amazing python packages that are listed in no particular order below.
 
 :OpenSlide: https://openslide.org
 :Scikit Image: https://scikit-image.org

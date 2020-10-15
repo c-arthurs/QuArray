@@ -10,10 +10,10 @@ Getting Started
 
 QuArray is a stand-alone, platform independent application (designed for Windows, Mac or Linux operating systems),
 and requires only a correct binary file to be downloaded. The binary is available from
-`GitHub <https://github.com/c-arthurs/QuArray>`_
+`GitHub <https://github.com/c-arthurs/QuArray>`_.
 
-The application may take a short while to start (as it is compiled with PyQt5 as a single executable file) however once
-the GUI is initialised the operation is quicker.
+The application may take a short while to start (as it is compiled with PyQt5 as a single executable file) however,
+this is not a problem once the GUI is initialised.
 
 Operating systems
 #################
@@ -21,17 +21,17 @@ Operating systems
 MacOS
 -----
 
-The binaries may be compatible on earlier operating systems but it has been tested on MacOS Catalina 10.15.6 and newer
+The binaries may be compatible on earlier operating systems but it has been tested on MacOS Catalina 10.15.6 and newer.
 
 Windows
 -------
 
-The binaries may be compatible on earlier operating systems but it has been tested on Windows 10
+The binaries may be compatible on earlier operating systems but it has been tested on Windows 10.
 
 Linux
 -----
 
-The binaries may be compatible on other distros but it has been tested on Ubuntu 20.04 LTS
+The binaries may be compatible on other distros but it has been tested on Ubuntu 20.04 LTS.
 
 Download the binary and make sure to make it executable by running -
 

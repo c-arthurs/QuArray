@@ -52,10 +52,9 @@ Left - Image of the first tab.
 
 Right - Image of the second tab.
 
-
-
 The first tab contains 1 where a core is present and 0 where there is no core. There should be nothing in the rest
-of the document
+of the document.
 
 The second tab contains pathology info and is used to make a figure if needed. This is not necessary to run the
-program. T and N stand for Tumour and Normal respectively.
+program. The tab does not have to be named *Pathology* but should be in the second tab location. T and N stand for Tumour
+and Normal respectively.

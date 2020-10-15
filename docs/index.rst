@@ -33,9 +33,9 @@ We would love to receive any pull requests for new features and bug fixes.
 Quick start guide
 =================
 
-#. Download the `latest stable binary <https://github.com/c-arthurs/QuArray/releases>`_
+#. Download the `latest stable binary <https://github.com/c-arthurs/QuArray/releases>`_.
 #. Run the program and either:
 
-   * :ref:`Export tissue cores<Export_page>` from a TMA
+   * :ref:`Export tissue cores<Export_page>` from a TMA.
 
-   * :ref:`Analyse DAB expression<DAB_page>` in the exported images
+   * :ref:`Analyse DAB expression<DAB_page>` in the exported images.
