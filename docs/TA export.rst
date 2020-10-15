@@ -44,7 +44,7 @@ see :ref:`array map example <Input_page>`
    * You can drag pre-applied cores before or after applying the bounding boxes.
 
 #. Excel layout the recommended way to index cores is with the row names as the number and the column names as the
-letter \(A6 col A row 6\) If you want to reverse this \(A6 row A col 6\) then uncheck the box when the window opens.
+   letter \(A6 col A row 6\) If you want to reverse this \(A6 row A col 6\) then uncheck the box when the window opens.
 
 #. *Save overlay image* determines whether or not to automatically save the image in the viewer (5).
 
