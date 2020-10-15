@@ -68,7 +68,7 @@ Output file structure
 Below is an example of what the file structure could look like for an end to end project after running image export and
 chromogen analysis
 
-.. code-block::
+.. code-block:: bash
 
    .
    ├── wsi_001.ndpi
