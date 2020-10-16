@@ -24,8 +24,6 @@ from PIL import Image
 if not hasattr(sys, "_MEIPASS"):
     sys._MEIPASS = '.'  # for running locally
 
-
-
 class MyWindow(QMainWindow):
     def __init__(self):
         super(MyWindow, self).__init__()
