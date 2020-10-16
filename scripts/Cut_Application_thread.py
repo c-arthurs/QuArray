@@ -65,18 +65,15 @@ class GraphicsScene(QGraphicsScene):
                 self.coords = self.coords[:-1]
 
     def sortCentroid(self, centroid):
+        scent = sorted(centroid, key=lambda x: x[0])
         sortList = []
         a = 0
         comLength = 0
         for length in self.rowcount:
             comLength = comLength + length
-            sortList.append((sorted(centroid[a:comLength], key=lambda k: [k[1]])))
+            sortList.extend((sorted(scent[a:comLength], key=lambda k: [k[1]])))
             a = a + length
-        sortedCentroid = []
-        for x in sortList:
-            for y in x:
-                sortedCentroid.append(y)
-        return sortedCentroid
+        return sortList
 
     def overlay_cores(self, core_diameter, scale_index, cores, autopilot=False):  # removed - centroid, image, cores
         if len(self.rectsandtext) >= 1:
@@ -93,7 +90,6 @@ class GraphicsScene(QGraphicsScene):
         else:
             self.centroid = [(y, x) for (x, y) in self.coords]
             self.centroid = [(self.centroid[i][0]+self.circles[i].scenePos().y(), self.centroid[i][1]+self.circles[i].scenePos().x()) for i in range(len(self.circles))]
-            print(self.centroid, "centroid")
         diameter = core_diameter / scale_index
         a = 0
         for y, x in self.centroid:
@@ -382,10 +378,12 @@ level_downsamples = {str(self.image.level_downsamples)}""")
                 cores = []
                 for col in ws.iter_cols():
                     for cell in col:
-                        values.append(cell.value)
                         if cell.value == 1:
                             cores.append(cell.coordinate)  # get core names if contain a 1
                 cores.sort(key=lambda x: x[1:])
+                for row in ws.iter_rows():
+                    for cell in row:
+                        values.append(cell.value)
             values = np.array_split(values, ws.max_row)
             for row in values:
                 rowcount.append(np.count_nonzero(row))  # EXCEL END
@@ -395,7 +393,6 @@ level_downsamples = {str(self.image.level_downsamples)}""")
             self.rowcount = rowcount
             self.arrayshape = (ws.max_row, ws.max_column)
             self.scene.rowcount = rowcount
-
             # check for pathology file
             if len(wb.sheetnames) > 1:
                 ws = wb.worksheets[1]  # pathology tab (hopefully)
