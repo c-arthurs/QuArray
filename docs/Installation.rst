@@ -26,7 +26,7 @@ The binaries may be compatible on earlier operating systems but it has been test
 Windows
 -------
 
-The binaries may be compatible on earlier operating systems but it has been tested on Windows 10.
+The binaries should be compatible with Windows7 and above.
 
 Linux
 -----
