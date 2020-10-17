@@ -22,7 +22,7 @@ Amount of Tissue
 
 
 Amount of Signal
-===============
+================
 
 .. code-block:: python
 

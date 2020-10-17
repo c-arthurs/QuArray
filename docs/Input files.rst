@@ -9,7 +9,7 @@ Whole Slide Image files
 
   .. note::
      An example whole slide image file and excel document is hosted
-     `here<https://emckclac-my.sharepoint.com/:f:/g/personal/k1472221_kcl_ac_uk/EutLIT4yc3BIlmNdUnDzLNAB0AcR1qc99Pvf8w-yCcmj_A?e=ULD2Hy>`_
+     `here <https://emckclac-my.sharepoint.com/:f:/g/personal/k1472221_kcl_ac_uk/EutLIT4yc3BIlmNdUnDzLNAB0AcR1qc99Pvf8w-yCcmj_A?e=LXunb4>`_
 
 Supported Formats
 -----------------
