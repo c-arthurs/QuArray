@@ -25,7 +25,7 @@ Each core in this example is 1mm in diameter (the core diameter or number of cor
 Tissue array map file
 =====================
 
-A spreadsheet (Excel*.xlsx) file acts as a map of the array.
+A spreadsheet (Excel *.xlsx) file acts as a map of the array.
 
 The spreadsheet can also contain indexed information that is used for downstream analysis such as sample ID,
 sample details (e.g. date of sample collection, type) and categories (e.g. normal or diseased).
