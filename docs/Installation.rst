@@ -16,9 +16,9 @@ The application may take a short while to start (as it is compiled with PyQt5 as
 this is not a problem once the GUI is initialised.
 
   .. note::
-     An example whole slide image file and excel document is hosted
-     `here <https://emckclac-my.sharepoint.com/:f:/g/personal/k1472221_kcl_ac_uk/EutLIT4yc3BIlmNdUnDzLNAB0AcR1qc99Pvf8w-yCcmj_A?e=LXunb4>`_
-
+     An example Tissue Array is hosted
+     `here <https://emckclac-my.sharepoint.com/:f:/g/personal/k1472221_kcl_ac_uk/EutLIT4yc3BIlmNdUnDzLNAB0AcR1qc99Pvf8w-yCcmj_A?e=LXunb4>`_.
+     The file contains a previously analyzed cancer tissue array (Arthurs et al, Sci Rep 2020) and mock data file.
 
 Operating systems
 #################
