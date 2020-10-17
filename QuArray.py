@@ -1,7 +1,7 @@
 # DEPLOY MAC
 # sudo pyinstaller -F --windowed -p /Users/callum/callum/QuArray/scripts --add-data "/Users/callum/callum/QuArray/scripts:scripts" --add-binary "/Users/callum/Library/Application Support/pyinstaller/bincache00_py37_64bit/libopenslide.0.dylib:." --icon=scripts/icons/icon.icns QuArray.py
 # Windows
-# pyinstaller -F --windowed -p C:/Users/aalab/Documents/callum/QuArray/scripts --add-data "C:/Users/aalab/Documents/callum/QuArray/scripts;scripts" --icon=scripts/icons/icon.ico QuArray.py
+# pyinstaller -F --windowed -p C:/Users/callum/QuArray/scripts --add-data "C:/Users/callum/QuArray/scripts;scripts" --icon=scripts/icons/icon.ico QuArray.py
 # Linux
 # pyinstaller -F -p ~/Documents/QuArray/scripts/ --add-data "scripts:scripts" QuArray.py
 
