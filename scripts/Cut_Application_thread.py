@@ -154,6 +154,7 @@ class MyWindow(QWidget):
                                  "manual_overlay": False}
         self.pathology = None
         self.excelpath = False
+
         self.init_scene()
         self.show()
 
@@ -422,7 +423,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
         self.export = Export(image=self.image, centroid=self.scene.centroid, cores=self.cores,
                              scale_index=self.scale_index,
                              core_diameter=self.core_diameter, output=self.output, name=self.name, lvl=self.lvl,
-                            path=self.path, arrayshape=self.arrayshape, pathology=self.pathology, resolution=resolution,
+                            path=self.path, arrayshape=self.arrayshape, pathology=self.pathology, resolution=resolution, window=self,
                              meta_only=meta_only)
 
         self.thread = QThread()
@@ -452,7 +453,7 @@ class Export(QObject):
     writemeta = pyqtSignal(bool)
 
     def __init__(self, image, centroid, cores, scale_index, core_diameter, output, name, lvl, path, arrayshape,
-                 pathology, resolution, meta_only=False):
+                 pathology, resolution, window, meta_only=False):
         super().__init__()
         self.image = image
         self.centroid = centroid
@@ -467,6 +468,7 @@ class Export(QObject):
         self.pathology = pathology
         self.resolution = resolution
         self.meta_only = meta_only
+        self.win = window
 
     @pyqtSlot()
     def run(self):
@@ -485,13 +487,18 @@ class Export(QObject):
         w_h = (self.core_diameter, self.core_diameter)
         self.lvl = 0
         for i in range(len(self.scaledcent)):
-            infostr.append("Loading " + self.name + "_" + cores[i] + ".png")
+            if not self.win.isVisible():
+                print("need to kill here - main window closed")
+                break
+            infostr.append("Exporting " + self.name + "_" + cores[i] + ".png")
+            print("Exporting " + self.name + "_" + cores[i] + ".png")
             self.info.emit('\n'.join(infostr))
             core = self.image.read_region(location=self.scaledcent[i], level=self.lvl, size=w_h)
             core.save(self.output + os.sep + self.name + "_" + cores[i] + ".png")
             infostr.append("Saved " + self.name + "_" + cores[i] + ".png")
             self.info.emit('\n'.join(infostr))
             self.countChanged.emit(i + 1)
+
         infostr.append("All files exported with JSON metadata")
         self.info.emit('\n'.join(infostr))
         print('\n'.join(infostr))

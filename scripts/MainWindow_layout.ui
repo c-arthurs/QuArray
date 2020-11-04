@@ -189,17 +189,12 @@
           </item>
           <item>
            <property name="text">
+            <string>Version 0.5</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
             <string/>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Created by - Callum Arthurs</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Version 0.0.1</string>
            </property>
           </item>
           <item>
@@ -229,17 +224,17 @@
           </item>
           <item>
            <property name="text">
-            <string>Images should be exported</string>
+            <string>Documentation:</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>via the NDPI exporter and </string>
+            <string>https://quarray.readthedocs.io</string>
            </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>analysed in the application.</string>
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
            </property>
           </item>
           <item>
@@ -249,12 +244,17 @@
           </item>
           <item>
            <property name="text">
-            <string>For bug reports, email - </string>
+            <string>For bugs and requests - </string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>callum.arthurs@kcl.ac.uk</string>
+            <string>https://github.com/c-arthurs/QuArray</string>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
            </property>
           </item>
          </widget>
