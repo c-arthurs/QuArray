@@ -49,7 +49,6 @@ class MyWindow(QMainWindow):
 
     def ndpi_export(self):  # select file(s) button 2
         self.NDPI = Cut_Application_thread.MyWindow()
-        # self.NDPI.setAttribute(Qt.WA_DeleteOnClose)
         self.NDPI.show()
 
     def dabanalysis(self):  # select file(s) button 1
