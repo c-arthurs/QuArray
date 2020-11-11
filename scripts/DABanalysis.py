@@ -67,17 +67,15 @@ class DabAnalysis(QThread):
             stain = np.logical_and(hue, image_sat > 0.79)
         # TODO : fix this - sent bug report to Github
         self.current_image = stain[::10, ::10].astype(float)
-        print(type(stain))
         self.figures.emit()
         if save:
             self.info.emit("Saving - " + filename+'_stain.tiff')
             imagesave = Image.fromarray(stain)
             imagesave.save(self.inputpath+os.sep+filename+'_stain.tiff')
-
         stint = np.copy(image)
+        stint = rgb2gray(stint)
         stint = rescale_intensity(stint, out_range=(0, 255))
         stint[stain == 0] = 0  # array with only the stained pixels
-        stint = rgb2gray(stint)
         stint = np.ravel(stint)
         stint = stint[stint != 0]
         stint_mean = stint.mean()
