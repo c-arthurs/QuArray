@@ -4,6 +4,7 @@ from natsort import natsorted
 import pandas as pd
 from skimage.color import rgb2hsv, rgb2gray
 from skimage.filters import gaussian, threshold_triangle
+from skimage.exposure import rescale_intensity
 from PyQt5.QtCore import QThread, pyqtSignal
 from PIL import Image
 
@@ -73,12 +74,14 @@ class DabAnalysis(QThread):
             imagesave = Image.fromarray(stain)
             imagesave.save(self.inputpath+os.sep+filename+'_stain.tiff')
 
-        stint = image
-        stint[stain == 0] = 0
-        stint = np.ravel(stint).nonzero()[0]  # only pixels with intensity
+        stint = np.copy(image)
+        stint = rescale_intensity(stint, out_range=(0, 255))
+        stint[stain == 0] = 0  # array with only the stained pixels
+        stint = rgb2gray(stint)
+        stint = np.ravel(stint)
+        stint = stint[stint != 0]
         stint_mean = stint.mean()
         stint_std = stint.std()
-
         stained = np.sum(stain)
         return stained, stint_mean, stint_std
 
