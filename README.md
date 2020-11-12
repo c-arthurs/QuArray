@@ -4,7 +4,7 @@ To get started please look at the documentation - https://quarray.readthedocs.io
 The documentation contains full videos of how the application can work.
 
 To download the program, click on releases on the right hand side of this page and download the correct binary file. 
-There are currently versions available for MacOS (>Catalina 10.15.6), Linux (Ubuntu>20.04), and Windows (>=7).
+There are currently versions available for MacOS (>Catalina 10.15.6), Linux (Ubuntu>16.04), and Windows (>=7).
 
 Log any issues in the issues tab and I will try to address them as soon as possible. We welcome pull/feature requests and bug reports.
 <br>
