@@ -42,9 +42,12 @@ Amount of Signal
             self.info.emit("Saving - " + filename+'_stain.tiff')  # SAVE A FIGURE IF REQUIRED
             imagesave = Image.fromarray(stain)
             imagesave.save(self.inputpath+os.sep+filename+'_stain.tiff')
-        stint = image
-        stint[stain == 0] = 0
-        stint = np.ravel(stint).nonzero()[0]  # ARRAY OF ONLY PIXELS WITH SOME INTENSITY
+        stint = np.copy(image)
+        stint = exposure.rescale_intensity(stint, out_range=(0, 255))
+        stint[stain == 0] = 0  # array with only the stained pixels
+        stint = color.rgb2gray(stint) # convert to greyscale
+        stint = np.ravel(stint) # flatten image array
+        stint = stint[stint != 0] # remove all zeros
         stint_mean = stint.mean()
         stint_std = stint.std()
         stained = np.sum(stain)
