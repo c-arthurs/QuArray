@@ -203,7 +203,7 @@ class MyWindow(QWidget):
     def loadndpi(self):
         self.init_scene()
         self.path, _ = QFileDialog.getOpenFileName(parent=self, caption='Open file',
-                                                   directory="/Users/callum/Desktop/", filter='*.ndpi;*.svs')
+                                                   directory="/Users/callum/Desktop/", filter='*.ndpi*;;*.svs*')
         if self.path:
             self.output = os.path.splitext(self.path)[0] + '_split'
             if not os.path.exists(self.output):  # make output directory
@@ -357,7 +357,7 @@ level_downsamples = {str(self.image.level_downsamples)}""")
     def read_excel(self):
         if not self.excelpath:
             self.excelpath, _ = QFileDialog.getOpenFileName(parent=self, caption='Open file',
-                                                            directory="/Users/callum/Desktop", filter='*.xlsx')
+                                                            directory="/Users/callum/Desktop", filter="*.xlsx*")
         self.activate([self.numberOfCoresLabel, self.numberOfCoresLineEdit, self.diameterLabel, self.diamiterLineEdit,
                        self.overlay, self.progressBar, self.excel_btn, self.overlaySave, self.tabWidget])
         if self.excelpath:
