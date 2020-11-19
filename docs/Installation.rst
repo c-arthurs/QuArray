@@ -31,12 +31,14 @@ The binaries may be compatible on earlier operating systems but it has been test
 Windows
 -------
 
-The binaries should be compatible with Windows7 and above.
+The binaries should be compatible with Windows7 and newer.
 
 Linux
 -----
 
-The binaries may be compatible on other distros but it has been tested on Ubuntu 20.04 LTS.
+The binaries may be compatible on other distros but it has been tested on Ubuntu 16.04 LTS.
+
+It should be compatible with all versions of Ubuntu newer than this.
 
 Download the binary and make sure to make it executable by running -
 
