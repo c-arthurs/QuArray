@@ -1,0 +1,9 @@
+information on packages that may need to be installed on ubuntu to run the python version of the script. This is not nesecary for running the binaries - just for deploying. 
+
+
+sudo apt get install xcb
+sudo apt get install eglfs
+sudo apt get install -y libxcb-xierama0
+sudo apt get install openslide-tools
+sudo apt get install python3-openslide
+
