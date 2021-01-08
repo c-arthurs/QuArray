@@ -75,4 +75,22 @@ There is also an option to select the file path of the PNG files. Please see
 
    * The thresholds button of the main window will turn green.
 
+Running the analysis
+############################
+
+This window is used for running chromogen stain analysis on exported images. This is also the landing page so the tissue array export window can be launched from here.
+
+.. image:: images/TMAPP_main_screen.png
+
+#. The button to launch the tissue array export window.
+
+#. The button to launch the threshold selector window shown above\. This should be used to apply new thresholds before chromogen analysis takes place\. The button will turn green once this has been set.
+
+#. Run dab analysis will launch a file selection window where the directory containing the whole dataset of images should be selected\. This will begin the chromogen analysis process.
+
+#. This is currently a way to overlay figures of the threshold over the image in a green overlay.
+
+#. This can be toggled to the off position if the user would rather that mask images were not saved as a part of the chromogen analysis process.
+
+#. Main window that displays images during analysis only\. It shows first the core image and then the thresholded image at a low resolution.
 
