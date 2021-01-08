@@ -44,7 +44,8 @@ see :ref:`array map example<Input_page>`.
    * You can drag pre-applied cores before or after applying the bounding boxes.
 
 #. Excel layout the recommended way to index cores is with the row names as the number and the column names as the
-   letter \(A6 col A row 6\) If you want to reverse this \(A6 row A col 6\) then uncheck the box when the window opens.
+   letter \(A6 col A row 6\) if you want to reverse this \(A6 row A col 6\) then
+uncheck the box when the window opens.
 
 #. *Save overlay image* determines whether or not to automatically save the image in the viewer (5).
 
@@ -63,7 +64,8 @@ see :ref:`array map example<Input_page>`.
 
    * Choose the best threshold then proceed to 13.
 
-#. Gaussian blur shows the sigma value applied to the gausian and it must be applied after 12.
+#. Gaussian blur shows the sigma value applied to the gaussian which must be applied after
+12.
 
 #. Closing should be applied after 13 and stands for binary morphological closing.
 
