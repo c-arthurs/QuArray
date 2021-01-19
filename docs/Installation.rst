@@ -63,8 +63,7 @@ It should be compatible with all versions of Ubuntu newer than this.
 
 
 
-Download the
-`Ubuntu binary <https://github.com/c-arthurs/QuArray/releases/download/v0.5/QuArray_ubuntu_16_04LTS>`
+Download the Ubuntu :download:`binary <https://github.com/c-arthurs/QuArray/releases/download/v0.5/QuArray_ubuntu_16_04LTS>`
 and make sure to make it executable by running -
 
 .. code-block:: bash
