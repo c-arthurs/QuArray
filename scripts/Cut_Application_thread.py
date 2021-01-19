@@ -202,8 +202,9 @@ class MyWindow(QWidget):
 
     def loadndpi(self):
         self.init_scene()
+        formats = '*.ndpi*;;*.svs*;;*.tif*;;*.scn*;;*..mrxs*;;*..tiff*;;*..svslide*;;*..bif*'
         self.path, _ = QFileDialog.getOpenFileName(parent=self, caption='Open file',
-                                                   directory="/Users/callum/Desktop/", filter='*.ndpi*;;*.svs*')
+                                                   directory="/Users/callum/Desktop/", filter=formats)
         if self.path:
             self.output = os.path.splitext(self.path)[0] + '_split'
             if not os.path.exists(self.output):  # make output directory

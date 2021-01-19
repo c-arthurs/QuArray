@@ -38,9 +38,6 @@ On the first opening of the file the user may have to certify that the program i
 
 The application should then boot as shown in the instructional videos.
 
-
-
-
 Windows
 -------
 
