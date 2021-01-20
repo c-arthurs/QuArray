@@ -202,7 +202,7 @@ class MyWindow(QWidget):
 
     def loadndpi(self):
         self.init_scene()
-        formats = '*.ndpi*;;*.svs*;;*.tif*;;*.scn*;;*..mrxs*;;*..tiff*;;*..svslide*;;*..bif*'
+        formats = '*.ndpi*;;*.svs*;;*.tif*;;*.scn*;;*.mrxs*;;*.tiff*;;*.svslide*;;*.bif*'
         self.path, _ = QFileDialog.getOpenFileName(parent=self, caption='Open file',
                                                    directory="/Users/callum/Desktop/", filter=formats)
         if self.path:
@@ -213,7 +213,10 @@ class MyWindow(QWidget):
             self.name = os.path.split(self.output)[-1]
             self.nameLineEdit.setText(self.name)
             self.load_ndpi.setStyleSheet("background-color: rgb(0,90,0)")
-            self.image = OpenSlide(self.path)
+            try:
+                self.image = OpenSlide(self.path)
+            except Exception as e:
+                self.loadndpi()
             print(self.path + ' read to memory')
             print('    slide format = ' + str(OpenSlide.detect_format(self.path)))
             if str(OpenSlide.detect_format(self.path)) == "aperio":
