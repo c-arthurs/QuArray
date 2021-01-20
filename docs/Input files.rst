@@ -16,6 +16,7 @@ Supported Formats
 -----------------
 
 The program now supports whole slide images in the following vendors:
+
 * Hamamatsu (.ndpi, .vms, .vmu)
 * Aperio (.svs, .tif)
 * Leica (.scn)
