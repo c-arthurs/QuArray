@@ -16,15 +16,15 @@ Supported Formats
 -----------------
 
 The program now supports whole slide images in the following vendors:
--Hamamatsu (.ndpi, .vms, .vmu)
--Aperio (.svs, .tif)
--Leica (.scn)
--Philips (.tiff)
--Sakura (.svslide)
--Generic tiled TIFF (.tif)
--MIRAX (.mrxs)
--Trestle (.tif)
--Ventana (.bif, .bif)
+- Hamamatsu (.ndpi, .vms, .vmu)
+- Aperio (.svs, .tif)
+- Leica (.scn)
+- Philips (.tiff)
+- Sakura (.svslide)
+- Generic tiled TIFF (.tif)
+- MIRAX (.mrxs)
+- Trestle (.tif)
+- Ventana (.bif, .bif)
 
 An example image of a WSI .ndpi file with tissue cores stained with DAB is given below:
 
