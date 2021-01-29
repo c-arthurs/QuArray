@@ -15,9 +15,9 @@ and requires only a correct binary file to be downloaded. The binary is availabl
   .. note::
      An example Tissue Array is hosted
      `here <https://emckclac-my.sharepoint.com/:f:/g/personal/k1472221_kcl_ac_uk/EutLIT4yc3BIlmNdUnDzLNAB0AcR1qc99Pvf8w-yCcmj_A?e=LXunb4>`_.
-     The file contains a previously analyzed cancer tissue array (Arthurs et al, Sci Rep 2020) and mock data file.
+     The file contains a previously analysed cancer tissue array (Arthurs et al, *Sci Rep 2020*) and mock data file.
 
-The application may take a short while to start when newly installe (as it is compiled with PyQt5 as a single executable file) however,
+The application may take a short while to start when newly installed (as it is compiled with PyQt5 as a single executable file) however,
 this is not a problem once the GUI is initialised. The start up times vary between operating systems due to differences in how the OS checks the files. A benchmark for each OS is as follows - Ubuntu 20.04LTS 3seconds, Windows 10 42seconds, MacOS Catalina 57seconds.
 
 Operating systems
