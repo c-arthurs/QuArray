@@ -66,5 +66,5 @@ html_theme_options = {
 # html_static_path = ['_static']
 
 html_logo = "images/icon.png"
-html_favicon = "../scripts/icons/dab.ico"
+html_favicon = "../scripts/icons/icon.ico"
 
