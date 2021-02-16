@@ -33,6 +33,7 @@ master_doc = 'index'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+        'sphinxext.opengraph'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -67,4 +68,5 @@ html_theme_options = {
 
 html_logo = "images/icon.png"
 html_favicon = "../scripts/icons/icon.ico"
+ogp_image = "images/icon.png"
 
