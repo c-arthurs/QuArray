@@ -67,4 +67,6 @@ html_theme_options = {
 html_logo = "images/icon.png"
 html_favicon = "../scripts/icons/icon.ico"
 ogp_image = "images/icon.png"
-
+ogp_custom_meta_tags = [
+    '<meta  name="image" property="og:image" content="[https://quarray.readthedocs.io/en/latest/_static/icon.png]/>',
+]
