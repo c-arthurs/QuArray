@@ -12,7 +12,7 @@ Tissue core threshold output
    whole slide image export file.
 
 1. Whole core images - indexed with coordinates in the file name
--------------------------------------------------------
+----------------------------------------------------------------
 
 Image of the selection panel
 ----------------------------
