@@ -2,7 +2,7 @@
 #
 # This file only contains a selection of the most common options. For a full
 # list see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
+# https://www.sphinx-doc.org/en/master/usage/configuration.Ntml
 
 # -- Path setup --------------------------------------------------------------
 
@@ -66,4 +66,5 @@ html_theme_options = {
 # html_static_path = ['_static']
 
 html_logo = "images/icon.png"
+html_favicon = "images/icon.png"
 
