@@ -16,5 +16,5 @@ Use the following citation tool downloads to import the reference into your cita
 
 <a href="/docs/citation_tools/citations-20210305T203244.ris" Download FILE>RIS (Mendley, Papers, Zotero)</a>
 
-<a href="https://raw.githubusercontent.com/c-arthurs/QuArray/master/docs/citation_tools/citations-20210305T203244.ris" Download FILE>RIS (Mendley, Papers, Zotero)</a>
+<a id="raw-url" href="https://raw.githubusercontent.com/c-arthurs/QuArray/master/docs/citation_tools/citations-20210305T203244.ris" Download FILE>RIS (Mendley, Papers, Zotero)</a>
 
