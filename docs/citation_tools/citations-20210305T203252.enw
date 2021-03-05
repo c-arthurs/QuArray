@@ -1,0 +1,16 @@
+%0 Journal Article
+%A Arthurs, Callum
+%A Ahmed, Aamir
+%T QuArray: an application for tissue array whole slide image export and signal analysis
+%B Bioinformatics
+%D 2021
+%R 10.1093/bioinformatics/btab119
+%1 btab119
+%J Bioinformatics
+%@ 1367-4803
+%X Tissue array (TA) staining, combined with whole slide imaging (WSI) methods facilitate discovery of biomarkers for diagnosis, prognostication and disease stratification. A key impediment in TA WSI analysis is handling missing tissue and artefacts when identifying tissue cores before quantitative, standardised downstream analysis. There is a need for an open access, user friendly, integrated analysis of the WSI generated using TAs in clinical and scientific research laboratories.We have developed QuArray (Quantitative Array Application) for image export and signal analysis of TAs using WSI. The application input is a WSI and a corresponding TA configuration file. QuArray identifies and exports core images and analyses chromogen staining in a simple graphical user interface. Output data is saved to file for further analysis including indexed data.Available for download from https://github.com/c-arthurs/QuArray under an MIT licence.https://quarray.readthedocs.io
+%[ 3/5/2021
+%U https://doi.org/10.1093/bioinformatics/btab119
+
+
+
